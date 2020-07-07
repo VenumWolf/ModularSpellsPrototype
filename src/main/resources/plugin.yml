@@ -1,0 +1,8 @@
+name: ModularSpells
+version: ${project.version}
+main: com.venumwolf.prototype.modularspells.ModularSpells
+api-version: 1.13
+prefix: Modular Spells
+authors: [VenumWolf]
+description: ${project.description}
+website: ${project.url}
