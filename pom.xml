@@ -6,7 +6,7 @@
 
     <groupId>com.venumwolf.prototype</groupId>
     <artifactId>ModularSpells</artifactId>
-    <version>0.1.0.${env.TRAVIS_BUILD_NUMBER}</version>
+    <version>0.1.0</version>
     <packaging>jar</packaging>
 
     <name>ModularSpells</name>
