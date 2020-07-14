@@ -39,7 +39,7 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 class SpellEffectTest {
-    class TestSpellEffect extends SpellEffect {
+    static class TestSpellEffect extends SpellEffect {
 
         @Override
         public void applyToEntity(Entity target, Map<String, Object> settings) {
