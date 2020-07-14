@@ -29,7 +29,7 @@ import java.util.Map;
  * Provides the base programming interface for spell effects, as well as some default implementations for convenience
  * methods.
  */
-public abstract class SpellEffect {
+public abstract class Effect {
 
     /**
      * Apply the effect to an Entity.  Some effects may instead apply to that entity's location.

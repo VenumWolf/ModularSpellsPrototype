@@ -25,7 +25,6 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
@@ -34,12 +33,11 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-class SpellEffectTest {
-    static class TestSpellEffect extends SpellEffect {
+class EffectTest {
+    static class TestEffect extends Effect {
 
         @Override
         public void applyToEntity(Entity target, Map<String, Object> settings) {
@@ -63,7 +61,7 @@ class SpellEffectTest {
     @Mock
     Location location2;
 
-    SpellEffect effect = new TestSpellEffect();
+    Effect effect = new TestEffect();
     Map<String, Object> settings = new HashMap<>();
     List<Entity> entities = new ArrayList<>();
     List<Location> locations = new ArrayList<>();
