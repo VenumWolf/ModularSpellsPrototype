@@ -17,10 +17,9 @@
  * along with Modular Spells.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.venumwolf.prototype.modularspells.utils.command;
+package com.venumwolf.prototype.modularspells.core.utils.command;
 
 import org.bukkit.command.CommandSender;
-import org.bukkit.command.ConsoleCommandSender;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
