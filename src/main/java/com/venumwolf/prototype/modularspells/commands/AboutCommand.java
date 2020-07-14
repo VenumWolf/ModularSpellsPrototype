@@ -20,7 +20,7 @@
 package com.venumwolf.prototype.modularspells.commands;
 
 import com.venumwolf.prototype.modularspells.Messages;
-import com.venumwolf.prototype.modularspells.utils.command.PluginCommand;
+import com.venumwolf.prototype.modularspells.core.utils.command.PluginCommand;
 import org.bukkit.ChatColor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.plugin.java.JavaPlugin;

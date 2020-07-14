@@ -17,7 +17,7 @@
  * along with Modular Spells.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.venumwolf.prototype.modularspells.utils.command.map;
+package com.venumwolf.prototype.modularspells.core.utils.command.map;
 
 import org.bukkit.plugin.java.JavaPlugin;
 

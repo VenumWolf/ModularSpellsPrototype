@@ -20,8 +20,8 @@
 package com.venumwolf.prototype.modularspells;
 
 import com.venumwolf.prototype.modularspells.commands.AboutCommand;
-import com.venumwolf.prototype.modularspells.utils.command.map.CommandMapper;
-import com.venumwolf.prototype.modularspells.utils.command.map.PluginCommandMapper;
+import com.venumwolf.prototype.modularspells.core.utils.command.map.CommandMapper;
+import com.venumwolf.prototype.modularspells.core.utils.command.map.PluginCommandMapper;
 import org.bukkit.command.Command;
 import org.bukkit.plugin.java.JavaPlugin;
 
