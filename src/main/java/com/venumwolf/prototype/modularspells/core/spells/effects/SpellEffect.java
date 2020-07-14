@@ -39,7 +39,10 @@ public abstract class SpellEffect {
      *                 which targets.  Valid settings are unique to each effect implementation, so reference the
      *                 documentation for specific effects for more information on their settings.
      */
-    public abstract void applyToAllEntities(List<Entity> targets, Map<String, Object> settings);
+    public void applyToAllEntities(List<Entity> targets, Map<String, Object> settings) {
+        targets.forEach((Entity target) ->
+                applyToEntity(target, settings));
+    }
 
     /**
      * Apply the effect to an Entity.  Some effects may instead apply to that entity's location.
@@ -59,7 +62,10 @@ public abstract class SpellEffect {
      *                  to which targets.  Valid settings are unique to each effect implementation, so reference the
      *                  documentation for specific effects for more information on their settings.
      */
-    public abstract void applyToAllLocations(List<Location> locations, Map<String, Object> settings);
+    public void applyToAllLocations(List<Location> locations, Map<String, Object> settings) {
+         locations.forEach((Location location) ->
+                applyToLocation(location, settings));
+    }
 
     /**
      * Apply the effect to a Location.  Some effects may instead apply to any entity at or near the Location as
