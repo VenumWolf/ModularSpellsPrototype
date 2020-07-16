@@ -20,11 +20,71 @@
 package com.venumwolf.prototype.modularspells.core.spells.effects;
 
 /**
- * The EffectType dictates at what stage an effect should be applied.
+ * Provides information about when / how an effect should be applied.
+ * <p>
+ * AMBIENT type effects are purely for aesthetics such as particles, sounds, ext.
  */
 public enum EffectType {
+    /**
+     * The effect launches something.
+     * <p>
+     * PROJECTILE type effects are applied as the spell is cast.
+     */
     PROJECTILE,
+
+    /**
+     * The effect is applied to a single target entity or location.
+     * <p>
+     * IMPACT type effects are applied when a PROJECTILE type effect hits something.
+     */
     IMPACT,
+
+    /**
+     * The effect is applied in an area around an impact target entity or location effecting all entities, or locations
+     * within a given radius.
+     */
+    IMPACT_AREA,
+
+    /**
+     * The effect is applied to the one casting the spell.
+     * <p>
+     * CASTER type effects are applied as the spell is cast.
+     */
     CASTER,
-    AREA
+
+    /**
+     * The effect is applied in an area around the one casting the spell effecting all entities, or locations within a
+     * given radius.
+     * <p>
+     * CASTER_AREA type effects are applied as the spell is cast.
+     */
+    CASTER_AREA,
+
+    /**
+     * AMBIENT_CAST type effects are applied as the spell is cast.
+     * <p>
+     * AMBIENT type effects are purely for aesthetics such as particles, sounds, ext.
+     */
+    AMBIENT_CAST,
+
+    /**
+     * AMBIENT_PROJECTILE type effects follow in-flight projectiles.
+     * <p>
+     * AMBIENT type effects are purely for aesthetics such as particles, sounds, ext.
+     */
+    AMBIENT_PROJECTILE,
+
+    /**
+     * AMBIENT_IMPACT type effects are applied when a PROJECTILE type effect hits something.
+     * <p>
+     * AMBIENT type effects are purely for aesthetics such as particles, sounds, ext.
+     */
+    AMBIENT_IMPACT,
+
+    /**
+     * AMBIENT_EFFECTED type effects are applied to any Entity targeted by a spell.
+     * <p>
+     * AMBIENT type effects are purely for aesthetics such as particles, sounds, ext.
+     */
+    AMBIENT_EFFECTED,
 }
