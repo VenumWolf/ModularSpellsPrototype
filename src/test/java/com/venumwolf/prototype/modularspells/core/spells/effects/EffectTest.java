@@ -37,7 +37,7 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 class EffectTest {
-    static class TestEffect extends Effect {
+    public static class TestEffect extends Effect {
 
         @Override
         public void applyToEntity(Entity target, Map<String, Object> settings) {
