@@ -72,4 +72,14 @@ public class Spell {
     public void removeEffect(Effect effect) {
         effects.remove(effect);
     }
+
+    /**
+     * Remove a collection of effects from the spell.
+     *
+     * Requests to remove non-existent effects should be ignored.
+     * @param effects The effects to remove.
+     */
+    public void removeAllEffects(Collection<? extends Effect> effects) {
+        this.effects.removeAll(effects);
+    }
 }
