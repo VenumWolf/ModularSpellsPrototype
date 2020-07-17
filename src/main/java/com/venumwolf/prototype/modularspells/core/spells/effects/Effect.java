@@ -32,6 +32,21 @@ import java.util.Map;
 public abstract class Effect {
 
     /**
+     * The type of the effect.  This controls how and when the effect is applied in the spell casting process.
+     *
+     * See {@link EffectType} for more information.
+     */
+    protected EffectType type;
+
+    /**
+     * Initialize with an EffectType value.
+     * @param type The EffectType for the effect.
+     */
+    public Effect(EffectType type) {
+        this.type = type;
+    }
+
+    /**
      * Apply the effect to an Entity.  Some effects may instead apply to that entity's location.
      * @param targets  A List of target Entities to which, or at which to apply the effect.
      * @param settings A dictionary-like map of settings which control how the effect should be applied.  The same
@@ -76,4 +91,12 @@ public abstract class Effect {
      *                 more information on their settings.
      */
     public abstract void applyToLocation(Location location, Map<String, Object> settings);
+
+    /**
+     * Access the EffectType.
+     * @return  The EffectType.
+     */
+    public EffectType getType() {
+        return type;
+    }
 }
