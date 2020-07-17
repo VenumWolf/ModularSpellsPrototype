@@ -80,4 +80,14 @@ class SpellTest {
         spell.removeEffect(effect);
         assertEquals(0, spell.effects.size());
     }
+
+    @Test
+    void removeAllEffects() {
+        ArrayList<Effect> effects = new ArrayList<>();
+        effects.add(new TestEffects.MessageTestEffect("test1"));
+        effects.add(new TestEffects.MessageTestEffect("test2"));
+        spell.effects.addAll(effects);
+        spell.removeAllEffects(effects);
+        assertEquals(0, spell.effects.size());
+    }
 }
