@@ -33,9 +33,7 @@ import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-
 class SpellTest {
-
 
     Spell spell;
 
