@@ -59,6 +59,14 @@ class SpellTest {
     }
 
     @Test
+    void addAllEffects() {
+        ArrayList<Effect> effects = new ArrayList<>();
+        effects.add(new TestEffects.MessageTestEffect("test1"));
+        effects.add(new TestEffects.MessageTestEffect("test2"));
+        spell.addAllEffects(effects);
+    }
+
+    @Test
     void removeEffect() {
         Effect effect = new TestEffects.MessageTestEffect("test");
         spell.effects.add(effect);
