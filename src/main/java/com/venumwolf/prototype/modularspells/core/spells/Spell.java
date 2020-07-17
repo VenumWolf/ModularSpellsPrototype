@@ -88,4 +88,3 @@ public class Spell {
         this.effects.removeAll(effects);
     }
 }
-`
