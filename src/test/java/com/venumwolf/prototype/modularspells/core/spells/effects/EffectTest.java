@@ -34,10 +34,15 @@ import java.util.List;
 import java.util.Map;
 
 import static org.mockito.Mockito.verify;
+import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(MockitoJUnitRunner.class)
 class EffectTest {
     static class TestEffect extends Effect {
+
+        public TestEffect() {
+            super(EffectType.CASTER);
+        }
 
         @Override
         public void applyToEntity(Entity target, Map<String, Object> settings) {
@@ -88,4 +93,9 @@ class EffectTest {
         verify(location1).clone();
         verify(location2).clone();
     }
+    @Test
+    void getType() {
+        assertEquals(EffectType.CASTER, effect.getType());
+    }
+
 }
