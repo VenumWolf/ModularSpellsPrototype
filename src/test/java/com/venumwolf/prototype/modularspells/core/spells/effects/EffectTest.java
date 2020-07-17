@@ -38,22 +38,6 @@ import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(MockitoJUnitRunner.class)
 class EffectTest {
-    static class TestEffect extends Effect {
-
-        public TestEffect() {
-            super(EffectType.CASTER);
-        }
-
-        @Override
-        public void applyToEntity(Entity target, Map<String, Object> settings) {
-            target.sendMessage("test");
-        }
-
-        @Override
-        public void applyToLocation(Location location, Map<String, Object> settings) {
-            location.clone();
-        }
-    }
     @Mock
     Entity entity1;
 
@@ -66,7 +50,7 @@ class EffectTest {
     @Mock
     Location location2;
 
-    Effect effect = new TestEffect();
+    Effect effect = new TestEffects.MessageTestEffect("test");
     Map<String, Object> settings = new HashMap<>();
     List<Entity> entities = new ArrayList<>();
     List<Location> locations = new ArrayList<>();
@@ -90,8 +74,8 @@ class EffectTest {
     @Test
     void applyToAllLocations() {
         effect.applyToAllLocations(locations, settings);
-        verify(location1).clone();
-        verify(location2).clone();
+        verify(location1).getNearbyPlayers(1);
+        verify(location2).getNearbyPlayers(1);
     }
     @Test
     void getType() {
