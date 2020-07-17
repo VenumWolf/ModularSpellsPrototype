@@ -44,7 +44,9 @@ public class Spell {
     }
 
     /**
-     * Add and effect to the spell.  Requests to add duplicate effects should be ignored.
+     * Add and effect to the spell.
+     *
+     * Requests to add duplicate effects should be ignored.
      * @param effect The effect to add.
      */
     public void addEffect(Effect effect) {
@@ -52,7 +54,18 @@ public class Spell {
     }
 
     /**
-     * Remove an effect from the spell.  Requests to remove non-existent effects should be ignored.
+     * Add a collection of effects to the spell.
+     *
+     * Requests to add duplicate effects should be ignored.
+     */
+    public void addAllEffects(Set<Effect> effects) {
+        this.effects.addAll(effects);
+    }
+
+    /**
+     * Remove an effect from the spell.
+     *
+     * Requests to remove non-existent effects should be ignored.
      * @param effect The effect to remove.
      */
     public void removeEffect(Effect effect) {
