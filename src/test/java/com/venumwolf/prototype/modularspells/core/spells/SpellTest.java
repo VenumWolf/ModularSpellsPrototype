@@ -20,26 +20,39 @@
 package com.venumwolf.prototype.modularspells.core.spells;
 
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
+import com.venumwolf.prototype.modularspells.core.spells.effects.TestEffects;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 
 class SpellTest {
 
-    Spell spell = new Spell();
+
+    Spell spell;
 
     @BeforeEach
     void setUp() {
-
+        spell = new Spell();
     }
 
     @Test
     void addEffect() {
+        Effect effect = new TestEffects.MessageTestEffect("test");
+        spell.addEffect(effect);
+        assertTrue(spell.effects.contains(effect));
+    }
 
+    @Test
+    void addEffectAlreadyExists() {
+        Effect effect = new TestEffects.MessageTestEffect("test");
+        spell.addEffect(effect);
+        spell.addEffect(effect);
+        assertEquals(1, spell.effects.size());
     }
 }

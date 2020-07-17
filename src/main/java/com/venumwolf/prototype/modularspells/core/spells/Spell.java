@@ -42,4 +42,12 @@ public class Spell {
     public Spell(Set<Effect> effects) {
         this.effects.addAll(effects);
     }
+
+    /**
+     * Add and effect to the spell.
+     * @param effect The effect to add.
+     */
+    public void addEffect(Effect effect) {
+        effects.add(effect);
+    }
 }
