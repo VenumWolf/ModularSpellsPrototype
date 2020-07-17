@@ -44,10 +44,18 @@ public class Spell {
     }
 
     /**
-     * Add and effect to the spell.
+     * Add and effect to the spell.  Requests to add duplicate effects should be ignored.
      * @param effect The effect to add.
      */
     public void addEffect(Effect effect) {
         effects.add(effect);
+    }
+
+    /**
+     * Remove an effect from the spell.  Requests to remove non-existent effects should be ignored.
+     * @param effect The effect to remove.
+     */
+    public void removeEffect(Effect effect) {
+        effects.remove(effect);
     }
 }

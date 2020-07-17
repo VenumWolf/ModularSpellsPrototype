@@ -26,6 +26,8 @@ import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
+import java.util.ArrayList;
+
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 
@@ -54,5 +56,20 @@ class SpellTest {
         spell.addEffect(effect);
         spell.addEffect(effect);
         assertEquals(1, spell.effects.size());
+    }
+
+    @Test
+    void removeEffect() {
+        Effect effect = new TestEffects.MessageTestEffect("test");
+        spell.effects.add(effect);
+        spell.removeEffect(effect);
+        assertEquals(0, spell.effects.size());
+    }
+
+    @Test
+    void removeNonExistentEffect() {
+        Effect effect = new TestEffects.MessageTestEffect("test");
+        spell.removeEffect(effect);
+        assertEquals(0, spell.effects.size());
     }
 }
