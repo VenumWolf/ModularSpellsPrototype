@@ -21,6 +21,7 @@ package com.venumwolf.prototype.modularspells.core.spells;
 
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
 
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -39,7 +40,7 @@ public class Spell {
      * Initialize the spell with default effects.
      * @param effects The starting effect of the spell.
      */
-    public Spell(Set<Effect> effects) {
+    public Spell(Collection<? extends Effect> effects) {
         this.effects.addAll(effects);
     }
 
@@ -58,7 +59,7 @@ public class Spell {
      *
      * Requests to add duplicate effects should be ignored.
      */
-    public void addAllEffects(Set<Effect> effects) {
+    public void addAllEffects(Collection<? extends Effect> effects) {
         this.effects.addAll(effects);
     }
 
