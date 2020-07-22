@@ -37,7 +37,7 @@ import static org.mockito.Mockito.verify;
 import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(MockitoJUnitRunner.class)
-class EffectTest {
+public class EffectTest {
     @Mock
     Entity entity1;
 
