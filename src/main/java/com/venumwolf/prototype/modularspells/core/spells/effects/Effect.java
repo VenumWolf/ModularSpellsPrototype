@@ -32,7 +32,24 @@ import java.util.Map;
 public abstract class Effect {
 
     /**
+     * The type of the effect.  This controls how and when the effect is applied in the spell casting process.
+     * <p>
+     * See {@link EffectType} for more information.
+     */
+    protected EffectType type;
+
+    /**
+     * Initialize with an EffectType value.
+     *
+     * @param type The EffectType for the effect.
+     */
+    public Effect(EffectType type) {
+        this.type = type;
+    }
+
+    /**
      * Apply the effect to an Entity.  Some effects may instead apply to that entity's location.
+     *
      * @param targets  A List of target Entities to which, or at which to apply the effect.
      * @param settings A dictionary-like map of settings which control how the effect should be applied.  The same
      *                 settings are applied to all targets, and there is no way to control which settings are applied to
@@ -46,6 +63,7 @@ public abstract class Effect {
 
     /**
      * Apply the effect to an Entity.  Some effects may instead apply to that entity's location.
+     *
      * @param target   A target Entity to which, or at which to apply the effect.
      * @param settings A dictionary-like map of settings which control how the effect should be applied.  Valid settings
      *                 are unique to each effect implementation, so reference the documentation for specific effects for
@@ -56,6 +74,7 @@ public abstract class Effect {
     /**
      * Apply the effect at a List of Locations.  Some effects may instead apply to any entity at or near the Locations
      * as applicable.
+     *
      * @param locations A List of Locations at which to apply the effect.
      * @param settings  A dictionary-like map of settings which control how the effect should be applied.  The same
      *                  settings are applied to all targets, and there is no way to control which settings are applied
@@ -63,17 +82,27 @@ public abstract class Effect {
      *                  documentation for specific effects for more information on their settings.
      */
     public void applyToAllLocations(List<Location> locations, Map<String, Object> settings) {
-         locations.forEach((Location location) ->
+        locations.forEach((Location location) ->
                 applyToLocation(location, settings));
     }
 
     /**
      * Apply the effect to a Location.  Some effects may instead apply to any entity at or near the Location as
      * applicable.
+     *
      * @param location A Location at which to apply the effect.
      * @param settings A dictionary-like map of settings which control how the effect should be applied.  Valid settings
      *                 are unique to each effect implementation, so reference the documentation for specific effects for
      *                 more information on their settings.
      */
     public abstract void applyToLocation(Location location, Map<String, Object> settings);
+
+    /**
+     * Access the EffectType.
+     *
+     * @return The EffectType.
+     */
+    public EffectType getType() {
+        return type;
+    }
 }
