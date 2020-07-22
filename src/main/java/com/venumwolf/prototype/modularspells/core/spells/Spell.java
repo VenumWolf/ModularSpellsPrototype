@@ -1,4 +1,4 @@
-/*
+`/*
  * Copyright (C) 2020 VenumWolf
  *
  * This file is part of Modular Spells.
@@ -17,7 +17,7 @@
  * along with Modular Spells.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.venumwolf.prototype.modularspells.core.spells;
+        package com.venumwolf.prototype.modularspells.core.spells;
 
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
 
@@ -34,10 +34,12 @@ public class Spell {
     /**
      * Initialize the Spell with no effects.
      */
-    public Spell() { }
+    public Spell() {
+    }
 
     /**
      * Initialize the spell with default effects.
+     *
      * @param effects The starting effect of the spell.
      */
     public Spell(Collection<? extends Effect> effects) {
@@ -46,8 +48,9 @@ public class Spell {
 
     /**
      * Add and effect to the spell.
-     *
+     * <p>
      * Requests to add duplicate effects should be ignored.
+     *
      * @param effect The effect to add.
      */
     public void addEffect(Effect effect) {
@@ -56,7 +59,7 @@ public class Spell {
 
     /**
      * Add a collection of effects to the spell.
-     *
+     * <p>
      * Requests to add duplicate effects should be ignored.
      */
     public void addAllEffects(Collection<? extends Effect> effects) {
@@ -65,11 +68,23 @@ public class Spell {
 
     /**
      * Remove an effect from the spell.
-     *
+     * <p>
      * Requests to remove non-existent effects should be ignored.
+     *
      * @param effect The effect to remove.
      */
     public void removeEffect(Effect effect) {
         effects.remove(effect);
+    }
+
+    /**
+     * Remove a collection of effects from the spell.
+     * <p>
+     * Requests to remove non-existent effects should be ignored.
+     *
+     * @param effects The effects to remove.
+     */
+    public void removeAllEffects(Collection<? extends Effect> effects) {
+        this.effects.removeAll(effects);
     }
 }

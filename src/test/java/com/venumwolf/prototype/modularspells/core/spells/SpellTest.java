@@ -27,14 +27,13 @@ import org.junit.runner.RunWith;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
-
 class SpellTest {
-
 
     Spell spell;
 
@@ -60,9 +59,7 @@ class SpellTest {
 
     @Test
     void addAllEffects() {
-        ArrayList<Effect> effects = new ArrayList<>();
-        effects.add(new TestEffects.MessageTestEffect("test1"));
-        effects.add(new TestEffects.MessageTestEffect("test2"));
+        List<Effect> effects = getEffectsList();
         spell.addAllEffects(effects);
     }
 
@@ -79,5 +76,21 @@ class SpellTest {
         Effect effect = new TestEffects.MessageTestEffect("test");
         spell.removeEffect(effect);
         assertEquals(0, spell.effects.size());
+    }
+
+    @Test
+    void removeAllEffects() {
+        List<Effect> effects = getEffectsList();
+        spell.effects.addAll(effects);
+        spell.removeAllEffects(effects);
+        assertEquals(0, spell.effects.size());
+    }
+
+    private List<Effect> getEffectsList() {
+        ArrayList<Effect> effects = new ArrayList<>();
+        effects.add(new TestEffects.MessageTestEffect("test1"));
+        effects.add(new TestEffects.MessageTestEffect("test2"));
+        effects.add(new TestEffects.MessageTestEffect("test3"));
+        return effects;
     }
 }
