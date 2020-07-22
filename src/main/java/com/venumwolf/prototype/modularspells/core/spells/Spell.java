@@ -1,4 +1,4 @@
-`/*
+/*
  * Copyright (C) 2020 VenumWolf
  *
  * This file is part of Modular Spells.
@@ -17,7 +17,7 @@
  * along with Modular Spells.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-        package com.venumwolf.prototype.modularspells.core.spells;
+package com.venumwolf.prototype.modularspells.core.spells;
 
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
 
