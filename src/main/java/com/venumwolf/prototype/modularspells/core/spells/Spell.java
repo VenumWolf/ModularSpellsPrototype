@@ -20,6 +20,8 @@
 package com.venumwolf.prototype.modularspells.core.spells;
 
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
+import com.venumwolf.prototype.modularspells.core.spells.events.SpellCastEvent;
+import com.venumwolf.prototype.modularspells.core.spells.events.SpellPrecastEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -124,6 +126,7 @@ public class Spell {
      * @param caster The entity casting the spell.  This entity can be considered the spell's origin.
      */
     public void trigger(Entity caster) {
+        pluginManager.callEvent(new SpellPrecastEvent(this, caster));
     }
 
     /**
