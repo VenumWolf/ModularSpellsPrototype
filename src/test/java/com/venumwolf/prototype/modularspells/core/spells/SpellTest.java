@@ -21,9 +21,12 @@ package com.venumwolf.prototype.modularspells.core.spells;
 
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
 import com.venumwolf.prototype.modularspells.core.spells.effects.TestEffects;
+import org.bukkit.plugin.PluginManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
@@ -35,6 +38,9 @@ import static org.mockito.Mockito.verify;
 @RunWith(MockitoJUnitRunner.class)
 class SpellTest {
 
+    @Mock
+    PluginManager mockPluginManager;
+
     Spell spell;
     Effect effect;
 
@@ -43,7 +49,8 @@ class SpellTest {
      */
     @BeforeEach
     void setUp() {
-        spell = new Spell();
+        MockitoAnnotations.openMocks(this);
+        spell = new Spell(mockPluginManager);
         effect = new TestEffects.MessageTestEffect("test");
     }
 
@@ -105,6 +112,13 @@ class SpellTest {
         assertEquals(0, spell.effects.size());
     }
 
+    @Test
+    void getEffects() {
+        List<Effect> effects = getEffectsList();
+        spell.effects.addAll(effects);
+        assertEquals(effects, spell.getEffects());
+    }
+
     /**
      * A helper-method which returns a list of test effects.
      * @return A list of test effects.
@@ -116,4 +130,6 @@ class SpellTest {
         effects.add(new TestEffects.MessageTestEffect("test3"));
         return effects;
     }
+
+
 }
