@@ -34,4 +34,12 @@ public class SpellCastEvent extends SpellEvent {
     public SpellCastEvent(Spell spell) {
         super(spell);
     }
+
+    /**
+     * Access the spell's Caster.
+     * @return
+     */
+    public Entity getCaster() {
+        return null;
+    }
 }
