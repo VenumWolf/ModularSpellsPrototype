@@ -27,17 +27,18 @@ import org.bukkit.entity.Entity;
  */
 public class SpellCastEvent extends SpellEvent {
     /**
-     * A basic constructor accepting a Spell object.
+     * A basic constructor accepting a Spell object, and the Entity casting it.
      *
-     * @param spell The Spell object to be used in the spell cast.
+     * @param spell  The Spell object to be used in the spell cast.
+     * @param caster The Entity responsible for casting the spell.  This Entity can be considered the spell's origin.
      */
-    public SpellCastEvent(Spell spell) {
+    public SpellCastEvent(Spell spell, Entity caster) {
         super(spell);
     }
 
     /**
      * Access the spell's Caster.
-     * @return
+     * @return The Entity responsible for casting the spell.
      */
     public Entity getCaster() {
         return null;
