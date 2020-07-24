@@ -21,6 +21,9 @@ package com.venumwolf.prototype.modularspells.core.spells;
 
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
 import com.venumwolf.prototype.modularspells.core.spells.effects.TestEffects;
+import com.venumwolf.prototype.modularspells.core.spells.events.SpellEvent;
+import com.venumwolf.prototype.modularspells.core.spells.events.SpellPrecastEvent;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -33,15 +36,36 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @RunWith(MockitoJUnitRunner.class)
 class SpellTest {
 
+    /**
+     * A mocked PluginManager which is provided to the spell for triggering events.
+     */
     @Mock
     PluginManager mockPluginManager;
 
+    /**
+     * A mock player which is used as the spell caster.
+     */
+    @Mock
+    Player player;
+
+    /**
+     * A spell used for testing.
+     */
     Spell spell;
+
+    /**
+     * A single effect used for testing.
+     *
+     * Use one of {@link TestEffects}'s implementations for testing.
+     *
+     */
     Effect effect;
 
     /**
@@ -112,6 +136,9 @@ class SpellTest {
         assertEquals(0, spell.effects.size());
     }
 
+    /**
+     * Verify effects are returned.
+     */
     @Test
     void getEffects() {
         List<Effect> effects = getEffectsList();
