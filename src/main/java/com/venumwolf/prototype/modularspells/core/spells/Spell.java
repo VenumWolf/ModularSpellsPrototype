@@ -25,6 +25,7 @@ import org.bukkit.plugin.PluginManager;
 
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -44,6 +45,7 @@ public class Spell {
 
     /**
      * Initialize the spell with a custom PluginManager.
+     *
      * @param pluginManager The PluginManager to use for triggering events.
      */
     public Spell(PluginManager pluginManager) {
@@ -99,5 +101,16 @@ public class Spell {
      */
     public void removeAllEffects(Collection<? extends Effect> effects) {
         this.effects.removeAll(effects);
+    }
+
+    /**
+     * Get a List of the Spell's effects.
+     * <p>
+     * The list should be a copy of the internal Effects set.
+     *
+     * @return A copy of the spell's effects.
+     */
+    public List<Effect> getEffects() {
+        return null;
     }
 }
