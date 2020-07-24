@@ -27,10 +27,8 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Represents a set of effects to be cast.
@@ -115,7 +113,7 @@ public class Spell {
      * @return A copy of the spell's effects.
      */
     public List<Effect> getEffects() {
-        return null;
+        return new ArrayList<>(effects);
     }
 
     /**
