@@ -36,48 +36,67 @@ import static org.mockito.Mockito.verify;
 class SpellTest {
 
     Spell spell;
+    Effect effect;
 
+    /**
+     * Set up a new Spell and Effect instance before each test.
+     */
     @BeforeEach
     void setUp() {
         spell = new Spell();
+        effect = new TestEffects.MessageTestEffect("test");
     }
 
+    /**
+     * Verify the effect is added to the spell.
+     */
     @Test
     void addEffect() {
-        Effect effect = new TestEffects.MessageTestEffect("test");
         spell.addEffect(effect);
         assertTrue(spell.effects.contains(effect));
     }
 
+    /**
+     * Verify the effect cannot be added more than once.
+     */
     @Test
     void addEffectAlreadyExists() {
-        Effect effect = new TestEffects.MessageTestEffect("test");
         spell.addEffect(effect);
         spell.addEffect(effect);
         assertEquals(1, spell.effects.size());
     }
 
+    /**
+     * Verify a list of effects can be added.
+     */
     @Test
     void addAllEffects() {
         List<Effect> effects = getEffectsList();
         spell.addAllEffects(effects);
     }
 
+    /**
+     * Verify the effect is removed from the spell.
+     */
     @Test
     void removeEffect() {
-        Effect effect = new TestEffects.MessageTestEffect("test");
         spell.effects.add(effect);
         spell.removeEffect(effect);
         assertEquals(0, spell.effects.size());
     }
 
+    /**
+     * Verify attempts to remove non-existent spells does not raise an exception.
+     */
     @Test
     void removeNonExistentEffect() {
-        Effect effect = new TestEffects.MessageTestEffect("test");
         spell.removeEffect(effect);
         assertEquals(0, spell.effects.size());
     }
 
+    /**
+     * Verify a whole list of effects can be removed.
+     */
     @Test
     void removeAllEffects() {
         List<Effect> effects = getEffectsList();
@@ -86,6 +105,10 @@ class SpellTest {
         assertEquals(0, spell.effects.size());
     }
 
+    /**
+     * A helper-method which returns a list of test effects.
+     * @return A list of test effects.
+     */
     private List<Effect> getEffectsList() {
         ArrayList<Effect> effects = new ArrayList<>();
         effects.add(new TestEffects.MessageTestEffect("test1"));
