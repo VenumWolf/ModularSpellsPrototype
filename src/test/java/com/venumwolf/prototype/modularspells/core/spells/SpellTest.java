@@ -166,4 +166,13 @@ class SpellTest {
         spell.trigger(player);
         verify(mockPluginManager).callEvent(any(SpellPrecastEvent.class));
     }
+
+    /**
+     * Verify the cast method triggers a SpellCastEvent.
+     */
+    @Test
+    void cast() {
+        spell.cast(player);
+        verify(mockPluginManager).callEvent(any(SpellCastEvent.class));
+    }
 }
