@@ -42,4 +42,11 @@ class DefaultSpellEventListenerTest {
         listener.onSpellPrecastEvent(event);
         verify(spell).cast(entity);
     }
+
+    @Test
+    void precastCancelled() {
+        SpellPrecastEvent event = new SpellPrecastEvent(spell, entity);
+        listener.onSpellPrecastEvent(event);
+        verify(spell, never()).cast(entity);
+    }
 }
