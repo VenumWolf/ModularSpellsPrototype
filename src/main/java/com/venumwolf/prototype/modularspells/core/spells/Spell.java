@@ -22,6 +22,7 @@ package com.venumwolf.prototype.modularspells.core.spells;
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 
 import java.util.Collection;
@@ -123,5 +124,15 @@ public class Spell {
      * @param caster The entity casting the spell.  This entity can be considered the spell's origin.
      */
     public void trigger(Entity caster) {
+    }
+
+    /**
+     * Start the actual spell cast.
+     * <p>
+     * No pre-checks are done in this stage.
+     *
+     * @param caster The entity casting the spell.  This entity can be considered the spell's origin.
+     */
+    public void cast(Entity caster) {
     }
 }
