@@ -158,5 +158,12 @@ class SpellTest {
         return effects;
     }
 
-
+    /**
+     * Verify the trigger method triggers a SpellPrecastEvent.
+     */
+    @Test
+    void trigger() {
+        spell.trigger(player);
+        verify(mockPluginManager).callEvent(any(SpellPrecastEvent.class));
+    }
 }
