@@ -144,7 +144,7 @@ class SpellTest {
     void getEffects() {
         List<Effect> effects = getEffectsList();
         spell.effects.addAll(effects);
-        assertEquals(effects, spell.getEffects());
+        assertTrue(effects.containsAll(spell.getEffects()));
     }
 
     /**
