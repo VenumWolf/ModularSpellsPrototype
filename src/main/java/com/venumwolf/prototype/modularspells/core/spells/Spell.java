@@ -137,5 +137,6 @@ public class Spell {
      * @param caster The entity casting the spell.  This entity can be considered the spell's origin.
      */
     public void cast(Entity caster) {
+        pluginManager.callEvent(new SpellCastEvent(this, caster));
     }
 }
