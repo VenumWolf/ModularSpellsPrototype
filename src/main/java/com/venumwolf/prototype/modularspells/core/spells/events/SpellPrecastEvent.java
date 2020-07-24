@@ -20,18 +20,15 @@
 package com.venumwolf.prototype.modularspells.core.spells.events;
 
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
+import org.bukkit.entity.Entity;
 
 /**
  * Signals the start of a spell cast.  This pre-cast phase should be used to perform pre-checks and to cancel the spell
  * if need be.
  */
 public class SpellPrecastEvent extends SpellCastEvent {
-    /**
-     * A basic constructor accepting a Spell object.
-     *
-     * @param spell The Spell object to be used in the spell cast.
-     */
-    public SpellPrecastEvent(Spell spell) {
-        super(spell);
+
+    public SpellPrecastEvent(Spell spell, Entity caster) {
+        super(spell, caster);
     }
 }
