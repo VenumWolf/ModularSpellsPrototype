@@ -55,6 +55,7 @@ class DefaultSpellEventListenerTest {
     @Test
     void precastCancelled() {
         SpellPrecastEvent event = new SpellPrecastEvent(spell, entity);
+        event.setCancelled(true);
         listener.onSpellPrecastEvent(event);
         verify(spell, never()).cast(entity);
     }
