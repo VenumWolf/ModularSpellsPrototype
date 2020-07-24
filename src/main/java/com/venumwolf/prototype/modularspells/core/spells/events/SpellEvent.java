@@ -20,6 +20,7 @@
 package com.venumwolf.prototype.modularspells.core.spells.events;
 
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
+import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 
@@ -28,8 +29,10 @@ import org.bukkit.event.HandlerList;
  * other, more specific event implementations.  SpellEvent does not provide enough information on its own to be useful
  * to executing specific spell casting steps.
  */
-public class SpellEvent extends Event {
+public class SpellEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
+
+    protected boolean isCancelled = false;
 
     /**
      * The Spell object associated with the event.
@@ -63,5 +66,15 @@ public class SpellEvent extends Event {
      */
     public static HandlerList getHandlerList() {
         return HANDLERS;
+    }
+
+    @Override
+    public boolean isCancelled() {
+        return isCancelled;
+    }
+
+    @Override
+    public void setCancelled(boolean isCancelled) {
+        this.isCancelled = isCancelled;
     }
 }
