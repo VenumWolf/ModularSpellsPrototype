@@ -20,10 +20,15 @@
 package com.venumwolf.prototype.modularspells.core.spells;
 
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
+import com.venumwolf.prototype.modularspells.core.spells.events.SpellCastEvent;
+import com.venumwolf.prototype.modularspells.core.spells.events.SpellPrecastEvent;
+import org.bukkit.Bukkit;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Represents a set of effects to be cast.
@@ -31,10 +36,22 @@ import java.util.Set;
 public class Spell {
     final Set<Effect> effects = new HashSet<>();
 
+    PluginManager pluginManager;
+
     /**
      * Initialize the Spell with no effects.
      */
     public Spell() {
+        pluginManager = Bukkit.getPluginManager();
+    }
+
+    /**
+     * Initialize the spell with a custom PluginManager.
+     *
+     * @param pluginManager The PluginManager to use for triggering events.
+     */
+    public Spell(PluginManager pluginManager) {
+        this.pluginManager = pluginManager;
     }
 
     /**
@@ -86,5 +103,38 @@ public class Spell {
      */
     public void removeAllEffects(Collection<? extends Effect> effects) {
         this.effects.removeAll(effects);
+    }
+
+    /**
+     * Get a List of the Spell's effects.
+     * <p>
+     * The list should be a copy of the internal Effects set.
+     *
+     * @return A copy of the spell's effects.
+     */
+    public List<Effect> getEffects() {
+        return new ArrayList<>(effects);
+    }
+
+    /**
+     * Initiate a spell cast.
+     * <p>
+     * This will trigger a PrecastSpellEvent.
+     *
+     * @param caster The entity casting the spell.  This entity can be considered the spell's origin.
+     */
+    public void trigger(Entity caster) {
+        pluginManager.callEvent(new SpellPrecastEvent(this, caster));
+    }
+
+    /**
+     * Start the actual spell cast.
+     * <p>
+     * No pre-checks are done in this stage.
+     *
+     * @param caster The entity casting the spell.  This entity can be considered the spell's origin.
+     */
+    public void cast(Entity caster) {
+        pluginManager.callEvent(new SpellCastEvent(this, caster));
     }
 }

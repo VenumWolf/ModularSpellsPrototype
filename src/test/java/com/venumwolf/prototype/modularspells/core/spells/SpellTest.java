@@ -21,63 +21,113 @@ package com.venumwolf.prototype.modularspells.core.spells;
 
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
 import com.venumwolf.prototype.modularspells.core.spells.effects.TestEffects;
+import com.venumwolf.prototype.modularspells.core.spells.events.SpellCastEvent;
+import com.venumwolf.prototype.modularspells.core.spells.events.SpellEvent;
+import com.venumwolf.prototype.modularspells.core.spells.events.SpellPrecastEvent;
+import org.bukkit.entity.Player;
+import org.bukkit.plugin.PluginManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
+import org.mockito.Mock;
+import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 class SpellTest {
 
+    /**
+     * A mocked PluginManager which is provided to the spell for triggering events.
+     */
+    @Mock
+    PluginManager mockPluginManager;
+
+    /**
+     * A mock player which is used as the spell caster.
+     */
+    @Mock
+    Player player;
+
+    /**
+     * A spell used for testing.
+     */
     Spell spell;
 
+    /**
+     * A single effect used for testing.
+     *
+     * Use one of {@link TestEffects}'s implementations for testing.
+     *
+     */
+    Effect effect;
+
+    /**
+     * Set up a new Spell and Effect instance before each test.
+     */
     @BeforeEach
     void setUp() {
-        spell = new Spell();
+        MockitoAnnotations.openMocks(this);
+        spell = new Spell(mockPluginManager);
+        effect = new TestEffects.MessageTestEffect("test");
     }
 
+    /**
+     * Verify the effect is added to the spell.
+     */
     @Test
     void addEffect() {
-        Effect effect = new TestEffects.MessageTestEffect("test");
         spell.addEffect(effect);
         assertTrue(spell.effects.contains(effect));
     }
 
+    /**
+     * Verify the effect cannot be added more than once.
+     */
     @Test
     void addEffectAlreadyExists() {
-        Effect effect = new TestEffects.MessageTestEffect("test");
         spell.addEffect(effect);
         spell.addEffect(effect);
         assertEquals(1, spell.effects.size());
     }
 
+    /**
+     * Verify a list of effects can be added.
+     */
     @Test
     void addAllEffects() {
         List<Effect> effects = getEffectsList();
         spell.addAllEffects(effects);
     }
 
+    /**
+     * Verify the effect is removed from the spell.
+     */
     @Test
     void removeEffect() {
-        Effect effect = new TestEffects.MessageTestEffect("test");
         spell.effects.add(effect);
         spell.removeEffect(effect);
         assertEquals(0, spell.effects.size());
     }
 
+    /**
+     * Verify attempts to remove non-existent spells does not raise an exception.
+     */
     @Test
     void removeNonExistentEffect() {
-        Effect effect = new TestEffects.MessageTestEffect("test");
         spell.removeEffect(effect);
         assertEquals(0, spell.effects.size());
     }
 
+    /**
+     * Verify a whole list of effects can be removed.
+     */
     @Test
     void removeAllEffects() {
         List<Effect> effects = getEffectsList();
@@ -86,11 +136,43 @@ class SpellTest {
         assertEquals(0, spell.effects.size());
     }
 
+    /**
+     * Verify effects are returned.
+     */
+    @Test
+    void getEffects() {
+        List<Effect> effects = getEffectsList();
+        spell.effects.addAll(effects);
+        assertTrue(effects.containsAll(spell.getEffects()));
+    }
+
+    /**
+     * A helper-method which returns a list of test effects.
+     * @return A list of test effects.
+     */
     private List<Effect> getEffectsList() {
         ArrayList<Effect> effects = new ArrayList<>();
         effects.add(new TestEffects.MessageTestEffect("test1"));
         effects.add(new TestEffects.MessageTestEffect("test2"));
         effects.add(new TestEffects.MessageTestEffect("test3"));
         return effects;
+    }
+
+    /**
+     * Verify the trigger method triggers a SpellPrecastEvent.
+     */
+    @Test
+    void trigger() {
+        spell.trigger(player);
+        verify(mockPluginManager).callEvent(any(SpellPrecastEvent.class));
+    }
+
+    /**
+     * Verify the cast method triggers a SpellCastEvent.
+     */
+    @Test
+    void cast() {
+        spell.cast(player);
+        verify(mockPluginManager).callEvent(any(SpellCastEvent.class));
     }
 }
