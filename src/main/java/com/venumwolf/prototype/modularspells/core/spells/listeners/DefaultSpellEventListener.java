@@ -1,5 +1,6 @@
 package com.venumwolf.prototype.modularspells.core.spells.listeners;
 
+import com.venumwolf.prototype.modularspells.core.spells.Spell;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellPrecastEvent;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
@@ -20,5 +21,9 @@ public class DefaultSpellEventListener implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGHEST)
     public final void onSpellPrecastEvent(SpellPrecastEvent event) {
+        if (!event.isCancelled()) {
+            Spell spell = event.getSpell();
+            spell.cast(event.getCaster());
+        }
     }
 }
