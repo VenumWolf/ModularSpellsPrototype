@@ -53,7 +53,19 @@ class SpellEventTest {
     }
 
     @Test
-    void getHandlerList() {
+    void isHandlerList() {
         assertNotNull(SpellEvent.getHandlerList());
+    }
+
+    @Test
+    void istCancelledTrue() {
+        event.setCancelled(true);
+        assertTrue(event.isCancelled());
+    }
+
+    @Test
+    void isCancelledFalse() {
+        event.setCancelled(false);
+        assertFalse(event.isCancelled());
     }
 }
