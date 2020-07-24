@@ -25,7 +25,7 @@ import com.venumwolf.prototype.modularspells.core.spells.Spell;
  * Signals the start of a spell cast.  This pre-cast phase should be used to perform pre-checks and to cancel the spell
  * if need be.
  */
-public class SpellPrecastEvent extends SpellEvent {
+public class SpellPrecastEvent extends SpellCastEvent {
     /**
      * A basic constructor accepting a Spell object.
      *
