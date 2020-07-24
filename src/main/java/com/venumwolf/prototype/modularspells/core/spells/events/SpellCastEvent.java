@@ -26,6 +26,12 @@ import org.bukkit.entity.Entity;
  * Signals an actual spell cast.
  */
 public class SpellCastEvent extends SpellEvent {
+
+    /**
+     * The entity responsible for casting the spell.  This entity can be considered the spell's origin.
+     */
+    private Entity caster;
+
     /**
      * A basic constructor accepting a Spell object, and the Entity casting it.
      *
@@ -34,6 +40,7 @@ public class SpellCastEvent extends SpellEvent {
      */
     public SpellCastEvent(Spell spell, Entity caster) {
         super(spell);
+        this.caster = caster;
     }
 
     /**
@@ -41,6 +48,6 @@ public class SpellCastEvent extends SpellEvent {
      * @return The Entity responsible for casting the spell.
      */
     public Entity getCaster() {
-        return null;
+        return caster;
     }
 }
