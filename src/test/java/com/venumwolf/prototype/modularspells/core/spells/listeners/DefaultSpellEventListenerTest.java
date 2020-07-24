@@ -30,12 +30,18 @@ class DefaultSpellEventListenerTest {
 
     DefaultSpellEventListener listener;
 
+    /**
+     * Initialize the mocks and create a listener instance before each test.
+     */
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
         listener = new DefaultSpellEventListener();
     }
 
+    /**
+     * Verify the SpellPrecastEvent handler will run spell.cast() when the event has not been canceled.
+     */
     @Test
     void precastNotCancelled() {
         SpellPrecastEvent event = new SpellPrecastEvent(spell, entity);
@@ -43,6 +49,9 @@ class DefaultSpellEventListenerTest {
         verify(spell).cast(entity);
     }
 
+    /**
+     * Verify the SpellPrecastEvent listener will not run spell.cast() when the event has been canceled.
+     */
     @Test
     void precastCancelled() {
         SpellPrecastEvent event = new SpellPrecastEvent(spell, entity);
