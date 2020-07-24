@@ -20,6 +20,8 @@
 package com.venumwolf.prototype.modularspells.core.spells;
 
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
+import org.bukkit.Bukkit;
+import org.bukkit.plugin.PluginManager;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -31,10 +33,21 @@ import java.util.Set;
 public class Spell {
     final Set<Effect> effects = new HashSet<>();
 
+    PluginManager pluginManager;
+
     /**
      * Initialize the Spell with no effects.
      */
     public Spell() {
+        pluginManager = Bukkit.getPluginManager();
+    }
+
+    /**
+     * Initialize the spell with a custom PluginManager.
+     * @param pluginManager The PluginManager to use for triggering events.
+     */
+    public Spell(PluginManager pluginManager) {
+        this.pluginManager = pluginManager;
     }
 
     /**
