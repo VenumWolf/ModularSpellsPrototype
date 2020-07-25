@@ -62,27 +62,27 @@ class DefaultSpellEventListenerTest {
     }
 
     /**
-     * Verify the SpellCastEvent listener will run the spell.applyCasterEffects(), and spell.applyProjectileEffects()
+     * Verify the SpellCastEvent listener will run the spell.applyCasterEffects(), and spell.launchProjectileEffects()
      * methods when the event has not been canceled.
      */
     @Test
     void castNotCancelled() {
         SpellCastEvent event = new SpellCastEvent(spell, entity);
         listener.onSpellCastEvent(event);
-        verify(spell).applyCasterEffects();
-        verify(spell).applyProjectileEffects();
+        verify(spell).applyCasterEffects(entity);
+        verify(spell).launchProjectileEffects(entity);
     }
 
     /**
      * Verify the SpellCastEvent listener will still run the spell.applyCasterEffects(), and
-     * spell.applyProjectileEffects() methods when the event has been canceled.
+     * spell.launchProjectileEffects() methods when the event has been canceled.
      */
     @Test
     void castCancelled() {
         SpellCastEvent event = new SpellCastEvent(spell, entity);
         event.setCancelled(true);
         listener.onSpellCastEvent(event);
-        verify(spell, never()).applyCasterEffects();
-        verify(spell, never()).applyProjectileEffects();
+        verify(spell, never()).applyCasterEffects(entity);
+        verify(spell, never()).launchProjectileEffects(entity);
     }
 }
