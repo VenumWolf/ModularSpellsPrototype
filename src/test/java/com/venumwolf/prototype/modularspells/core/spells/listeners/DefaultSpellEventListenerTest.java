@@ -74,7 +74,7 @@ class DefaultSpellEventListenerTest {
     }
 
     /**
-     * Verify the SpellCastEvent listener will still run the spell.applyCasterEffects(), and
+     * Verify the SpellCastEvent listener will not run the spell.applyCasterEffects(), and
      * spell.launchProjectileEffects() methods when the event has been canceled.
      */
     @Test

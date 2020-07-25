@@ -30,9 +30,9 @@ public class DefaultSpellEventListener implements Listener {
 
     /**
      * Starts the first stage of the spell cast by calling the spell's `applyCasterEffects`, and
-     * `applyProjectileEffects` methods.  This will always happen, even if the event has been cancelled. In most cases,
-     * this should be the only handler listening for {@link SpellCastEvent}s. All pre-processing should be done in the
-     * pre-cast stage by listening for {@link SpellPrecastEvent}s.
+     * `applyProjectileEffects` methods. In most cases, this should be the only handler listening for
+     * {@link SpellCastEvent}s. All pre-processing should be done in the pre-cast stage by listening for
+     * {@link SpellPrecastEvent}s.
      */
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSpellCastEvent(SpellCastEvent event) {
