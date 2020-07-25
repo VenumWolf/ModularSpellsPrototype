@@ -1,6 +1,7 @@
 package com.venumwolf.prototype.modularspells.core.spells.listeners;
 
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
+import com.venumwolf.prototype.modularspells.core.spells.events.SpellCastEvent;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellPrecastEvent;
 import org.bukkit.entity.Entity;
 import org.junit.jupiter.api.BeforeEach;
@@ -58,5 +59,30 @@ class DefaultSpellEventListenerTest {
         event.setCancelled(true);
         listener.onSpellPrecastEvent(event);
         verify(spell, never()).cast(entity);
+    }
+
+    /**
+     * Verify the SpellCastEvent listener will run the spell.applyCasterEffects(), and spell.applyProjectileEffects()
+     * methods when the event has not been canceled.
+     */
+    @Test
+    void castNotCancelled() {
+        SpellCastEvent event = new SpellCastEvent(spell, entity);
+        listener.onSpellCastEvent(event);
+        verify(spell).applyCasterEffects();
+        verify(spell).applyProjectileEffects();
+    }
+
+    /**
+     * Verify the SpellCastEvent listener will still run the spell.applyCasterEffects(), and
+     * spell.applyProjectileEffects() methods when the event has been canceled.
+     */
+    @Test
+    void castCancelled() {
+        SpellCastEvent event = new SpellCastEvent(spell, entity);
+        event.setCancelled(true);
+        listener.onSpellCastEvent(event);
+        verify(spell, never()).applyCasterEffects();
+        verify(spell, never()).applyProjectileEffects();
     }
 }
