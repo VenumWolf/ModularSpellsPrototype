@@ -3,6 +3,7 @@ package com.venumwolf.prototype.modularspells.core.spells.listeners;
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellCastEvent;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellPrecastEvent;
+import org.bukkit.entity.Entity;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
@@ -36,5 +37,11 @@ public class DefaultSpellEventListener implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSpellCastEvent(SpellCastEvent event) {
+        if (!event.isCancelled()) {
+            Spell spell = event.getSpell();
+            Entity caster = event.getCaster();
+            spell.applyCasterEffects(caster);
+            spell.launchProjectileEffects(caster);
+        }
     }
 }
