@@ -19,6 +19,7 @@
 
 package com.venumwolf.prototype.modularspells.core.spells.effects;
 
+import com.venumwolf.prototype.modularspells.core.spells.Spell;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
@@ -45,13 +46,13 @@ public class TestEffects {
         }
 
         @Override
-        public void applyToEntity(Entity target, Map<String, Object> settings) {
+        public void applyToEntity(Entity target, Spell spell) {
             target.sendMessage(message);
         }
 
         @Override
-        public void applyToLocation(Location location, Map<String, Object> settings) {
-            applyToAllEntities(new ArrayList<>(location.getNearbyPlayers(1)), settings);
+        public void applyToLocation(Location location, Spell spell) {
+            applyToAllEntities(new ArrayList<>(location.getNearbyPlayers(1)), spell);
         }
     }
 }
