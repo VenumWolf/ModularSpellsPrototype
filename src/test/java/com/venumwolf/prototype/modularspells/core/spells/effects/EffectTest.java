@@ -30,12 +30,10 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.verify;
-import static org.junit.jupiter.api.Assertions.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EffectTest {
@@ -51,11 +49,9 @@ public class EffectTest {
     @Mock
     Location location2;
 
-    Effect effect = new TestEffects.MessageTestEffect("test");
+    Effect effect;
 
-    Spell spell = new Spell();
-
-    Map<String, Object> settings = new HashMap<>();
+    Spell spell;
 
     List<Entity> entities = new ArrayList<>();
 
@@ -68,6 +64,8 @@ public class EffectTest {
         entities.add(entity2);
         locations.add(location1);
         locations.add(location2);
+        effect = new TestEffects.MessageTestEffect("test");
+        spell = new Spell();
         spell.addEffect(effect);
     }
 
@@ -88,5 +86,4 @@ public class EffectTest {
     void getType() {
         assertEquals(EffectType.CASTER, effect.getType());
     }
-
 }
