@@ -103,7 +103,7 @@ class SpellTest {
      */
     @Test
     void addAllEffects() {
-        List<Effect> effects = generateMockedEffects();
+        List<Effect> effects = generateMockedEffects(5);
         spell.addAllEffects(effects);
     }
 
@@ -131,7 +131,7 @@ class SpellTest {
      */
     @Test
     void removeAllEffects() {
-        List<Effect> effects = generateMockedEffects();
+        List<Effect> effects = generateMockedEffects(5);
         spell.effects.addAll(effects);
         spell.removeAllEffects(effects);
         assertEquals(0, spell.effects.size());
@@ -142,7 +142,7 @@ class SpellTest {
      */
     @Test
     void getEffects() {
-        List<Effect> effects = generateMockedEffects();
+        List<Effect> effects = generateMockedEffects(5);
         spell.effects.addAll(effects);
         assertTrue(effects.containsAll(spell.getEffects()));
     }
