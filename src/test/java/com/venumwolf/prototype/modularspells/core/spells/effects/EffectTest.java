@@ -19,6 +19,7 @@
 
 package com.venumwolf.prototype.modularspells.core.spells.effects;
 
+import com.venumwolf.prototype.modularspells.core.spells.Spell;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.junit.jupiter.api.BeforeEach;
@@ -51,8 +52,13 @@ public class EffectTest {
     Location location2;
 
     Effect effect = new TestEffects.MessageTestEffect("test");
+
+    Spell spell = new Spell();
+
     Map<String, Object> settings = new HashMap<>();
+
     List<Entity> entities = new ArrayList<>();
+
     List<Location> locations = new ArrayList<>();
 
     @BeforeEach
@@ -62,18 +68,19 @@ public class EffectTest {
         entities.add(entity2);
         locations.add(location1);
         locations.add(location2);
+        spell.addEffect(effect);
     }
 
     @Test
     void applyToAllEntities() {
-        effect.applyToAllEntities(entities, settings);
+        effect.applyToAllEntities(entities, spell);
         verify(entity1).sendMessage("test");
         verify(entity2).sendMessage("test");
 ;    }
 
     @Test
     void applyToAllLocations() {
-        effect.applyToAllLocations(locations, settings);
+        effect.applyToAllLocations(locations, spell);
         verify(location1).getNearbyPlayers(1);
         verify(location2).getNearbyPlayers(1);
     }
