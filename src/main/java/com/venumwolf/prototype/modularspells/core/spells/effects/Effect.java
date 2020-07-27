@@ -24,7 +24,6 @@ import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Provides the base programming interface for spell effects, as well as some default implementations for convenience

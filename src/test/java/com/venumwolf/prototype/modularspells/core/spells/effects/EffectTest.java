@@ -22,7 +22,6 @@ package com.venumwolf.prototype.modularspells.core.spells.effects;
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
-import org.bukkit.plugin.PluginManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -34,35 +33,37 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.mock;
-import static org.mockito.Mockito.verify;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EffectTest {
+
+    @Mock
     Effect effect;
 
+    @Mock
     Spell spell;
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        effect = new TestEffects.MessageTestEffect("test");
-        spell = new Spell(mock(PluginManager.class));
-        spell.addEffect(effect);
+        doCallRealMethod().when(effect).applyToAllEntities(any(), any(Spell.class));
+        doCallRealMethod().when(effect).applyToAllLocations(any(), any(Spell.class));
     }
 
     @Test
     void applyToAllEntities() {
         List<Entity> entities = generateMockedEntities(10);
         effect.applyToAllEntities(entities, spell);
-        entities.forEach(entity -> verify(entity).sendMessage("test"))
+        verify(effect, atLeast(10)).applyToEntity(any(Entity.class), any(Spell.class));
 ;    }
 
     @Test
     void applyToAllLocations() {
         List<Location> locations = generateMockedLocations(10);
         effect.applyToAllLocations(locations, spell);
-        locations.forEach(location -> verify(location).getNearbyPlayers(1));
+        verify(effect, atLeast(10)).applyToLocation(any(Location.class), any(Spell.class));
     }
 
     private List<Entity> generateMockedEntities(int count) {
@@ -87,10 +88,5 @@ public class EffectTest {
 
     private Location generateMockedLocation() {
         return mock(Location.class);
-    }
-
-    @Test
-    void getType() {
-        assertEquals(EffectType.CASTER, effect.getType());
     }
 }
