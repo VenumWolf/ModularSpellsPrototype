@@ -63,7 +63,7 @@ public class EffectTest {
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
+        MockitoAnnotations.openMocks(this);
         entities.add(entity1);
         entities.add(entity2);
         locations.add(location1);
