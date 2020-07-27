@@ -78,7 +78,6 @@ class SpellTest {
         MockitoAnnotations.openMocks(this);
         spell = new Spell(mockPluginManager);
         effect = new TestEffects.MessageTestEffect("test");
-        random = new Random();
     }
 
     /**
