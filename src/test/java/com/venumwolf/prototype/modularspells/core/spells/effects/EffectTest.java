@@ -22,6 +22,7 @@ package com.venumwolf.prototype.modularspells.core.spells.effects;
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+import org.bukkit.plugin.PluginManager;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -33,6 +34,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -65,7 +67,7 @@ public class EffectTest {
         locations.add(location1);
         locations.add(location2);
         effect = new TestEffects.MessageTestEffect("test");
-        spell = new Spell();
+        spell = new Spell(mock(PluginManager.class));
         spell.addEffect(effect);
     }
 
