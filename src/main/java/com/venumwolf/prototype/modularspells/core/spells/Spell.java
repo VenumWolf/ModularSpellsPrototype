@@ -28,6 +28,7 @@ import org.bukkit.entity.Entity;
 import org.bukkit.plugin.PluginManager;
 
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Represents a set of effects to be cast.
@@ -122,7 +123,9 @@ public class Spell {
      * @return A List containing the filtered Effects.
      */
     public List<Effect> getEffectsOfType(EffectType type) {
-        return new ArrayList<>();
+        return effects.stream()
+                .filter(effect -> effect.getType() == type)
+                .collect(Collectors.toList());
     }
 
     /**
