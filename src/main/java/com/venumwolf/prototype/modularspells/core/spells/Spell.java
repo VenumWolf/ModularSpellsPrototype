@@ -116,6 +116,16 @@ public class Spell {
     }
 
     /**
+     * Get a List of the Spell's Effects which match the requested EffectType
+     *
+     * @param type The desired EffectType of the returned effects.
+     * @return A List containing the filtered Effects.
+     */
+    public List<Effect> getEffectsOfType(EffectType type) {
+        return new ArrayList<>();
+    }
+
+    /**
      * Initiate a spell cast.
      * <p>
      * This will trigger a PrecastSpellEvent.
