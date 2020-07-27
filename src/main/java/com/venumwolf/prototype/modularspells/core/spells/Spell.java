@@ -156,6 +156,8 @@ public class Spell {
      * @param caster The entity casting the spell.  This entity will be provided to the effects as the target.
      */
     public void applyCasterEffects(Entity caster) {
+        List<Effect> effects = getEffectsOfType(EffectType.CASTER);
+        effects.forEach(effect -> effect.applyToEntity(caster, new HashMap<>()));
     }
 
     /**
@@ -164,5 +166,6 @@ public class Spell {
      * @param caster The entity casting the spell.  This entity will be provided to the effects as the origin.
      */
     public void launchProjectileEffects(Entity caster) {
+    
     }
 }
