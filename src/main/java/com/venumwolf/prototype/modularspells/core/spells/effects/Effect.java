@@ -19,11 +19,11 @@
 
 package com.venumwolf.prototype.modularspells.core.spells.effects;
 
+import com.venumwolf.prototype.modularspells.core.spells.Spell;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 
 import java.util.List;
-import java.util.Map;
 
 /**
  * Provides the base programming interface for spell effects, as well as some default implementations for convenience
@@ -51,39 +51,31 @@ public abstract class Effect {
      * Apply the effect to an Entity.  Some effects may instead apply to that entity's location.
      *
      * @param targets  A List of target Entities to which, or at which to apply the effect.
-     * @param settings A dictionary-like map of settings which control how the effect should be applied.  The same
-     *                 settings are applied to all targets, and there is no way to control which settings are applied to
-     *                 which targets.  Valid settings are unique to each effect implementation, so reference the
-     *                 documentation for specific effects for more information on their settings.
+     * @param spell    The Spell from which the effect was cast.
      */
-    public void applyToAllEntities(List<Entity> targets, Map<String, Object> settings) {
+    public void applyToAllEntities(List<Entity> targets, Spell spell) {
         targets.forEach((Entity target) ->
-                applyToEntity(target, settings));
+                applyToEntity(target, spell));
     }
 
     /**
      * Apply the effect to an Entity.  Some effects may instead apply to that entity's location.
      *
      * @param target   A target Entity to which, or at which to apply the effect.
-     * @param settings A dictionary-like map of settings which control how the effect should be applied.  Valid settings
-     *                 are unique to each effect implementation, so reference the documentation for specific effects for
-     *                 more information on their settings.
+     * @param spell    The Spell from which the effect was cast.
      */
-    public abstract void applyToEntity(Entity target, Map<String, Object> settings);
+    public abstract void applyToEntity(Entity target, Spell spell);
 
     /**
      * Apply the effect at a List of Locations.  Some effects may instead apply to any entity at or near the Locations
      * as applicable.
      *
      * @param locations A List of Locations at which to apply the effect.
-     * @param settings  A dictionary-like map of settings which control how the effect should be applied.  The same
-     *                  settings are applied to all targets, and there is no way to control which settings are applied
-     *                  to which targets.  Valid settings are unique to each effect implementation, so reference the
-     *                  documentation for specific effects for more information on their settings.
+     * @param spell     The Spell from which the effect was cast.
      */
-    public void applyToAllLocations(List<Location> locations, Map<String, Object> settings) {
+    public void applyToAllLocations(List<Location> locations, Spell spell) {
         locations.forEach((Location location) ->
-                applyToLocation(location, settings));
+                applyToLocation(location, spell));
     }
 
     /**
@@ -91,11 +83,9 @@ public abstract class Effect {
      * applicable.
      *
      * @param location A Location at which to apply the effect.
-     * @param settings A dictionary-like map of settings which control how the effect should be applied.  Valid settings
-     *                 are unique to each effect implementation, so reference the documentation for specific effects for
-     *                 more information on their settings.
+     * @param spell    The Spell from which the effect was cast.
      */
-    public abstract void applyToLocation(Location location, Map<String, Object> settings);
+    public abstract void applyToLocation(Location location, Spell spell);
 
     /**
      * Access the EffectType.

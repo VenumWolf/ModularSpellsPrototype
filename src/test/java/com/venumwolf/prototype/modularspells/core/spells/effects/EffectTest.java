@@ -19,6 +19,7 @@
 
 package com.venumwolf.prototype.modularspells.core.spells.effects;
 
+import com.venumwolf.prototype.modularspells.core.spells.Spell;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.junit.jupiter.api.BeforeEach;
@@ -29,57 +30,54 @@ import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
-import static org.mockito.Mockito.verify;
-import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EffectTest {
-    @Mock
-    Entity entity1;
 
     @Mock
-    Entity entity2;
+    Effect effect;
 
     @Mock
-    Location location1;
-
-    @Mock
-    Location location2;
-
-    Effect effect = new TestEffects.MessageTestEffect("test");
-    Map<String, Object> settings = new HashMap<>();
-    List<Entity> entities = new ArrayList<>();
-    List<Location> locations = new ArrayList<>();
+    Spell spell;
 
     @BeforeEach
     void setUp() {
-        MockitoAnnotations.initMocks(this);
-        entities.add(entity1);
-        entities.add(entity2);
-        locations.add(location1);
-        locations.add(location2);
+        MockitoAnnotations.openMocks(this);
+        doCallRealMethod().when(effect).applyToAllEntities(any(), any(Spell.class));
+        doCallRealMethod().when(effect).applyToAllLocations(any(), any(Spell.class));
     }
 
     @Test
     void applyToAllEntities() {
-        effect.applyToAllEntities(entities, settings);
-        verify(entity1).sendMessage("test");
-        verify(entity2).sendMessage("test");
+        List<Entity> entities = generateMockedEntities(10);
+        effect.applyToAllEntities(entities, spell);
+        verify(effect, atLeast(10)).applyToEntity(any(Entity.class), any(Spell.class));
 ;    }
 
     @Test
     void applyToAllLocations() {
-        effect.applyToAllLocations(locations, settings);
-        verify(location1).getNearbyPlayers(1);
-        verify(location2).getNearbyPlayers(1);
-    }
-    @Test
-    void getType() {
-        assertEquals(EffectType.CASTER, effect.getType());
+        List<Location> locations = generateMockedLocations(10);
+        effect.applyToAllLocations(locations, spell);
+        verify(effect, atLeast(10)).applyToLocation(any(Location.class), any(Spell.class));
     }
 
+    private List<Entity> generateMockedEntities(int count) {
+        List<Entity> entities = new ArrayList<>();
+        for (int i = 0; i < count; i ++) {
+            entities.add(mock(Entity.class));
+        }
+        return entities;
+    }
+
+    private List<Location> generateMockedLocations(int count) {
+        List<Location> locations = new ArrayList<>();
+        for (int i = 0; i < count; i ++) {
+            locations.add(mock(Location.class));
+        }
+        return locations;
+    }
 }

@@ -21,7 +21,6 @@ package com.venumwolf.prototype.modularspells.core.spells;
 
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
 import com.venumwolf.prototype.modularspells.core.spells.effects.EffectType;
-import com.venumwolf.prototype.modularspells.core.spells.effects.TestEffects;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellCastEvent;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellPrecastEvent;
 import org.bukkit.entity.Player;
@@ -63,10 +62,8 @@ class SpellTest {
 
     /**
      * A single effect used for testing.
-     *
-     * Use one of {@link TestEffects}'s implementations for testing.
-     *
      */
+    @Mock
     Effect effect;
 
     /**
@@ -76,7 +73,6 @@ class SpellTest {
     void setUp() {
         MockitoAnnotations.openMocks(this);
         spell = new Spell(mockPluginManager);
-        effect = new TestEffects.MessageTestEffect("test");
     }
 
     /**

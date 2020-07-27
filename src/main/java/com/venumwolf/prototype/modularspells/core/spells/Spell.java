@@ -157,7 +157,7 @@ public class Spell {
      */
     public void applyCasterEffects(Entity caster) {
         List<Effect> effects = getEffectsOfType(EffectType.CASTER);
-        effects.forEach(effect -> effect.applyToEntity(caster, new HashMap<>()));
+        effects.forEach(effect -> effect.applyToEntity(caster, this));
     }
 
     /**
@@ -167,6 +167,6 @@ public class Spell {
      */
     public void launchProjectileEffects(Entity caster) {
         List<Effect> effects = getEffectsOfType(EffectType.PROJECTILE);
-        effects.forEach(effect -> effect.applyToEntity(caster, new HashMap<>()));
+        effects.forEach(effect -> effect.applyToEntity(caster, this));
     }
 }
