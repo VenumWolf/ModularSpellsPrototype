@@ -166,6 +166,7 @@ public class Spell {
      * @param caster The entity casting the spell.  This entity will be provided to the effects as the origin.
      */
     public void launchProjectileEffects(Entity caster) {
-    
+        List<Effect> effects = getEffectsOfType(EffectType.PROJECTILE);
+        effects.forEach(effect -> effect.applyToEntity(caster, new HashMap<>()));
     }
 }
