@@ -69,24 +69,16 @@ public class EffectTest {
     private List<Entity> generateMockedEntities(int count) {
         List<Entity> entities = new ArrayList<>();
         for (int i = 0; i < count; i ++) {
-            entities.add(generateMockedEntity());
+            entities.add(mock(Entity.class));
         }
         return entities;
-    }
-
-    private Entity generateMockedEntity() {
-        return mock(Entity.class);
     }
 
     private List<Location> generateMockedLocations(int count) {
         List<Location> locations = new ArrayList<>();
         for (int i = 0; i < count; i ++) {
-            locations.add(generateMockedLocation());
+            locations.add(mock(Location.class));
         }
         return locations;
-    }
-
-    private Location generateMockedLocation() {
-        return mock(Location.class);
     }
 }
