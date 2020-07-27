@@ -36,7 +36,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
-import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -70,11 +69,6 @@ class SpellTest {
      *
      */
     Effect effect;
-
-    /**
-     * An RNG for randomized tests.
-     */
-    Random random;
 
     /**
      * Set up a new Spell and Effect instance before each test.
@@ -160,31 +154,20 @@ class SpellTest {
      */
     @Test
     void getEffectsOfType() {
-        EffectType[] effectTypes = EffectType.values();
-        for (EffectType validType: effectTypes) {
-            spell.addAllEffects(generateMockedEffects(10));
-            List<Effect> validEffects = spell.getEffects().stream()
-                    .filter(effect -> effect.getType() == validType)
-                    .collect(Collectors.toList());
-            assertTrue(
-                    validEffects.containsAll(spell.getEffectsOfType(validType)),
-                    "The effects retrieved from the spell do not match the valid effects.");
-        }
+        List<Effect> validEffects = generateMockedEffects(3, EffectType.CASTER);
+        spell.addAllEffects(generateMockedEffects(3, EffectType.IMPACT));
+        spell.addAllEffects(validEffects);
+        assertTrue(spell.getEffectsOfType(EffectType.CASTER).containsAll(validEffects));
     }
 
-    private List<Effect> generateMockedEffects(int count) {
+    private List<Effect> generateMockedEffects(int count, EffectType type) {
         ArrayList<Effect> effects = new ArrayList<>();
         for (int i = 0; i < count; i++) {
             Effect effect = mock(Effect.class);
-            when(effect.getType()).thenReturn(getRandomEffectType());
+            when(effect.getType()).thenReturn(type);
             effects.add(effect);
         }
         return effects;
-    }
-
-    private EffectType getRandomEffectType() {
-        EffectType[] effectTypes = EffectType.values();
-        return effectTypes[random.nextInt(effectTypes.length) - 1];
     }
 
     /**
