@@ -158,6 +158,22 @@ class SpellTest {
         assertTrue(spell.getEffectsOfType(EffectType.CASTER).containsAll(validEffects));
     }
 
+    /**
+     * A helper-method which returns a list of mocked test effects.
+     *
+     * @param count The number of mocks to create and add to the list.
+     * @return      A list of mocked test effects.  The EffectType will be set to CASTER.
+     */
+    private List<Effect> generateMockedEffects(int count) {
+        return generateMockedEffects(count, EffectType.CASTER);
+    }
+
+    /**
+     * A helper-method which returns a list of mocked test effects.
+     * @param count The number of mocks to create and add to the list.
+     * @param type  The EffectType the mocks should return on getType().
+     * @return      A list of mocked test effects.
+     */
     private List<Effect> generateMockedEffects(int count, EffectType type) {
         ArrayList<Effect> effects = new ArrayList<>();
         for (int i = 0; i < count; i++) {
@@ -165,18 +181,6 @@ class SpellTest {
             when(effect.getType()).thenReturn(type);
             effects.add(effect);
         }
-        return effects;
-    }
-
-    /**
-     * A helper-method which returns a list of test effects.
-     * @return A list of test effects.
-     */
-    private List<Effect> generateMockedEffects() {
-        ArrayList<Effect> effects = new ArrayList<>();
-        effects.add(new TestEffects.MessageTestEffect("test1"));
-        effects.add(new TestEffects.MessageTestEffect("test2"));
-        effects.add(new TestEffects.MessageTestEffect("test3"));
         return effects;
     }
 
