@@ -20,9 +20,9 @@
 package com.venumwolf.prototype.modularspells.core.spells;
 
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
+import com.venumwolf.prototype.modularspells.core.spells.effects.EffectType;
 import com.venumwolf.prototype.modularspells.core.spells.effects.TestEffects;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellCastEvent;
-import com.venumwolf.prototype.modularspells.core.spells.events.SpellEvent;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellPrecastEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -36,8 +36,9 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -102,7 +103,7 @@ class SpellTest {
      */
     @Test
     void addAllEffects() {
-        List<Effect> effects = getEffectsList();
+        List<Effect> effects = generateMockedEffects(5);
         spell.addAllEffects(effects);
     }
 
@@ -130,7 +131,7 @@ class SpellTest {
      */
     @Test
     void removeAllEffects() {
-        List<Effect> effects = getEffectsList();
+        List<Effect> effects = generateMockedEffects(5);
         spell.effects.addAll(effects);
         spell.removeAllEffects(effects);
         assertEquals(0, spell.effects.size());
@@ -141,20 +142,45 @@ class SpellTest {
      */
     @Test
     void getEffects() {
-        List<Effect> effects = getEffectsList();
+        List<Effect> effects = generateMockedEffects(5);
         spell.effects.addAll(effects);
         assertTrue(effects.containsAll(spell.getEffects()));
     }
 
     /**
-     * A helper-method which returns a list of test effects.
-     * @return A list of test effects.
+     * Verify only the effects of a requested type are returned.  Check for each type.
      */
-    private List<Effect> getEffectsList() {
+    @Test
+    void getEffectsOfType() {
+        List<Effect> validEffects = generateMockedEffects(3, EffectType.CASTER);
+        spell.addAllEffects(generateMockedEffects(3, EffectType.IMPACT));
+        spell.addAllEffects(validEffects);
+        assertTrue(spell.getEffectsOfType(EffectType.CASTER).containsAll(validEffects));
+    }
+
+    /**
+     * A helper-method which returns a list of mocked test effects.
+     *
+     * @param count The number of mocks to create and add to the list.
+     * @return      A list of mocked test effects.  The EffectType will be set to CASTER.
+     */
+    private List<Effect> generateMockedEffects(int count) {
+        return generateMockedEffects(count, EffectType.CASTER);
+    }
+
+    /**
+     * A helper-method which returns a list of mocked test effects.
+     * @param count The number of mocks to create and add to the list.
+     * @param type  The EffectType the mocks should return on getType().
+     * @return      A list of mocked test effects.
+     */
+    private List<Effect> generateMockedEffects(int count, EffectType type) {
         ArrayList<Effect> effects = new ArrayList<>();
-        effects.add(new TestEffects.MessageTestEffect("test1"));
-        effects.add(new TestEffects.MessageTestEffect("test2"));
-        effects.add(new TestEffects.MessageTestEffect("test3"));
+        for (int i = 0; i < count; i++) {
+            Effect effect = mock(Effect.class);
+            when(effect.getType()).thenReturn(type);
+            effects.add(effect);
+        }
         return effects;
     }
 

@@ -20,11 +20,11 @@
 package com.venumwolf.prototype.modularspells.core.spells;
 
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
+import com.venumwolf.prototype.modularspells.core.spells.effects.EffectType;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellCastEvent;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellPrecastEvent;
 import org.bukkit.Bukkit;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 
 import java.util.*;
@@ -117,6 +117,18 @@ public class Spell {
     }
 
     /**
+     * Get a List of the Spell's Effects which match the requested EffectType
+     *
+     * @param type The desired EffectType of the returned effects.
+     * @return A List containing the filtered Effects.
+     */
+    public List<Effect> getEffectsOfType(EffectType type) {
+        return effects.stream()
+                .filter(effect -> effect.getType() == type)
+                .collect(Collectors.toList());
+    }
+
+    /**
      * Initiate a spell cast.
      * <p>
      * This will trigger a PrecastSpellEvent.
@@ -136,5 +148,25 @@ public class Spell {
      */
     public void cast(Entity caster) {
         pluginManager.callEvent(new SpellCastEvent(this, caster));
+    }
+
+    /**
+     * Apply all effects of type CASTER, and CASTER_AREA.
+     *
+     * @param caster The entity casting the spell.  This entity will be provided to the effects as the target.
+     */
+    public void applyCasterEffects(Entity caster) {
+        List<Effect> effects = getEffectsOfType(EffectType.CASTER);
+        effects.forEach(effect -> effect.applyToEntity(caster, new HashMap<>()));
+    }
+
+    /**
+     * Apply all effects of type PROJECTILE.
+     *
+     * @param caster The entity casting the spell.  This entity will be provided to the effects as the origin.
+     */
+    public void launchProjectileEffects(Entity caster) {
+        List<Effect> effects = getEffectsOfType(EffectType.PROJECTILE);
+        effects.forEach(effect -> effect.applyToEntity(caster, new HashMap<>()));
     }
 }
