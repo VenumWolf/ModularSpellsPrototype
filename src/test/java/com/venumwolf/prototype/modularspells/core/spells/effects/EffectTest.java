@@ -39,33 +39,13 @@ import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 public class EffectTest {
-    @Mock
-    Entity entity1;
-
-    @Mock
-    Entity entity2;
-
-    @Mock
-    Location location1;
-
-    @Mock
-    Location location2;
-
     Effect effect;
 
     Spell spell;
 
-    List<Entity> entities = new ArrayList<>();
-
-    List<Location> locations = new ArrayList<>();
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-        entities.add(entity1);
-        entities.add(entity2);
-        locations.add(location1);
-        locations.add(location2);
         effect = new TestEffects.MessageTestEffect("test");
         spell = new Spell(mock(PluginManager.class));
         spell.addEffect(effect);
@@ -73,17 +53,42 @@ public class EffectTest {
 
     @Test
     void applyToAllEntities() {
+        List<Entity> entities = generateMockedEntities(10);
         effect.applyToAllEntities(entities, spell);
-        verify(entity1).sendMessage("test");
-        verify(entity2).sendMessage("test");
+        entities.forEach(entity -> verify(entity).sendMessage("test"))
 ;    }
 
     @Test
     void applyToAllLocations() {
+        List<Location> locations = generateMockedLocations(10);
         effect.applyToAllLocations(locations, spell);
-        verify(location1).getNearbyPlayers(1);
-        verify(location2).getNearbyPlayers(1);
+        locations.forEach(location -> verify(location).getNearbyPlayers(1));
     }
+
+    private List<Entity> generateMockedEntities(int count) {
+        List<Entity> entities = new ArrayList<>();
+        for (int i = 0; i < count; i ++) {
+            entities.add(generateMockedEntity());
+        }
+        return entities;
+    }
+
+    private Entity generateMockedEntity() {
+        return mock(Entity.class);
+    }
+
+    private List<Location> generateMockedLocations(int count) {
+        List<Location> locations = new ArrayList<>();
+        for (int i = 0; i < count; i ++) {
+            locations.add(generateMockedLocation());
+        }
+        return locations;
+    }
+
+    private Location generateMockedLocation() {
+        return mock(Location.class);
+    }
+
     @Test
     void getType() {
         assertEquals(EffectType.CASTER, effect.getType());
