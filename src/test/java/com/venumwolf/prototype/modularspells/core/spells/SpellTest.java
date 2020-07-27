@@ -22,7 +22,6 @@ package com.venumwolf.prototype.modularspells.core.spells;
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
 import com.venumwolf.prototype.modularspells.core.spells.effects.TestEffects;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellCastEvent;
-import com.venumwolf.prototype.modularspells.core.spells.events.SpellEvent;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellPrecastEvent;
 import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
@@ -36,9 +35,10 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
-import static org.mockito.ArgumentMatchers.*;
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.verify;
 
 @RunWith(MockitoJUnitRunner.class)
 class SpellTest {
