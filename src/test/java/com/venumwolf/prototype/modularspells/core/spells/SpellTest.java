@@ -20,6 +20,7 @@
 package com.venumwolf.prototype.modularspells.core.spells;
 
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
+import com.venumwolf.prototype.modularspells.core.spells.effects.EffectType;
 import com.venumwolf.prototype.modularspells.core.spells.effects.TestEffects;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellCastEvent;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellPrecastEvent;
@@ -34,11 +35,12 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
 class SpellTest {
@@ -144,6 +146,28 @@ class SpellTest {
         List<Effect> effects = getEffectsList();
         spell.effects.addAll(effects);
         assertTrue(effects.containsAll(spell.getEffects()));
+    }
+
+    /**
+     * Verify only the effects of a requested type are returned.  Check for each type.
+     */
+    @Test
+    void getEffectsOfType() {
+        EffectType[] effectTypes = EffectType.values();
+        for (EffectType validType: effectTypes) {
+            ArrayList<Effect> validEffects = new ArrayList<>();
+            Random random = new Random();
+            for (int i = 0; i < 10; i++) {
+                EffectType type = effectTypes[random.nextInt(effectTypes.length) - 1];
+                Effect effect = mock(Effect.class);
+                when(effect.getType()).thenReturn(type);
+                if (type == validType) {
+                    validEffects.add(effect);
+                }
+                spell.addEffect(effect);
+            }
+            assertTrue(validEffects.containsAll(spell.getEffectsOfType(validType)));
+        }
     }
 
     /**
