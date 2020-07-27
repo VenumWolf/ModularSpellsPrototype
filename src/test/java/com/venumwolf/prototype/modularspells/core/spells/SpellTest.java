@@ -36,6 +36,7 @@ import org.mockito.junit.MockitoJUnitRunner;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -71,6 +72,11 @@ class SpellTest {
     Effect effect;
 
     /**
+     * An RNG for randomized tests.
+     */
+    Random random;
+
+    /**
      * Set up a new Spell and Effect instance before each test.
      */
     @BeforeEach
@@ -78,6 +84,7 @@ class SpellTest {
         MockitoAnnotations.openMocks(this);
         spell = new Spell(mockPluginManager);
         effect = new TestEffects.MessageTestEffect("test");
+        random = new Random();
     }
 
     /**
@@ -155,19 +162,29 @@ class SpellTest {
     void getEffectsOfType() {
         EffectType[] effectTypes = EffectType.values();
         for (EffectType validType: effectTypes) {
-            ArrayList<Effect> validEffects = new ArrayList<>();
-            Random random = new Random();
-            for (int i = 0; i < 10; i++) {
-                EffectType type = effectTypes[random.nextInt(effectTypes.length) - 1];
-                Effect effect = mock(Effect.class);
-                when(effect.getType()).thenReturn(type);
-                if (type == validType) {
-                    validEffects.add(effect);
-                }
-                spell.addEffect(effect);
-            }
-            assertTrue(validEffects.containsAll(spell.getEffectsOfType(validType)));
+            spell.addAllEffects(generateMockedEffects(10));
+            List<Effect> validEffects = spell.getEffects().stream()
+                    .filter(effect -> effect.getType() == validType)
+                    .collect(Collectors.toList());
+            assertTrue(
+                    validEffects.containsAll(spell.getEffectsOfType(validType)),
+                    "The effects retrieved from the spell do not match the valid effects.");
         }
+    }
+
+    private List<Effect> generateMockedEffects(int count) {
+        ArrayList<Effect> effects = new ArrayList<>();
+        for (int i = 0; i < count; i++) {
+            Effect effect = mock(Effect.class);
+            when(effect.getType()).thenReturn(getRandomEffectType());
+            effects.add(effect);
+        }
+        return effects;
+    }
+
+    private EffectType getRandomEffectType() {
+        EffectType[] effectTypes = EffectType.values();
+        return effectTypes[random.nextInt(effectTypes.length) - 1];
     }
 
     /**
