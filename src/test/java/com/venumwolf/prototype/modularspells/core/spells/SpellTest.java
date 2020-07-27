@@ -35,7 +35,6 @@ import org.mockito.junit.MockitoJUnitRunner;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertTrue;
@@ -104,7 +103,7 @@ class SpellTest {
      */
     @Test
     void addAllEffects() {
-        List<Effect> effects = getEffectsList();
+        List<Effect> effects = generateMockedEffects();
         spell.addAllEffects(effects);
     }
 
@@ -132,7 +131,7 @@ class SpellTest {
      */
     @Test
     void removeAllEffects() {
-        List<Effect> effects = getEffectsList();
+        List<Effect> effects = generateMockedEffects();
         spell.effects.addAll(effects);
         spell.removeAllEffects(effects);
         assertEquals(0, spell.effects.size());
@@ -143,7 +142,7 @@ class SpellTest {
      */
     @Test
     void getEffects() {
-        List<Effect> effects = getEffectsList();
+        List<Effect> effects = generateMockedEffects();
         spell.effects.addAll(effects);
         assertTrue(effects.containsAll(spell.getEffects()));
     }
@@ -173,7 +172,7 @@ class SpellTest {
      * A helper-method which returns a list of test effects.
      * @return A list of test effects.
      */
-    private List<Effect> getEffectsList() {
+    private List<Effect> generateMockedEffects() {
         ArrayList<Effect> effects = new ArrayList<>();
         effects.add(new TestEffects.MessageTestEffect("test1"));
         effects.add(new TestEffects.MessageTestEffect("test2"));
