@@ -20,12 +20,28 @@
 package com.venumwolf.prototype.modularspells;
 
 import com.venumwolf.prototype.modularspells.commands.AboutCommand;
+import com.venumwolf.prototype.modularspells.core.spells.Spell;
+import com.venumwolf.prototype.modularspells.core.spells.effects.EffectType;
+import com.venumwolf.prototype.modularspells.core.spells.listeners.DefaultSpellEventListener;
 import com.venumwolf.prototype.modularspells.core.utils.command.map.CommandMapper;
 import com.venumwolf.prototype.modularspells.core.utils.command.map.PluginCommandMapper;
+import com.venumwolf.prototype.modularspells.listeners.SpellCastListener;
+import com.venumwolf.prototype.modularspells.spells.effects.MessageEffect;
+import org.bukkit.Bukkit;
+import org.bukkit.Material;
+import org.bukkit.NamespacedKey;
 import org.bukkit.command.Command;
+import org.bukkit.enchantments.Enchantment;
+import org.bukkit.inventory.ItemFlag;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.ShapelessRecipe;
+import org.bukkit.inventory.meta.ItemMeta;
+import org.bukkit.persistence.PersistentDataType;
+import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -36,7 +52,9 @@ public final class ModularSpells extends JavaPlugin {
     @Override
     public void onEnable() {
         logLicenseNotice();
+        registerEventListeners();
         registerCommands();
+        registerWandRecipe();
     }
 
     private void logLicenseNotice() {
@@ -50,4 +68,33 @@ public final class ModularSpells extends JavaPlugin {
         commandMapper.addAll("ModularSpells", commands);
     }
 
+    private void registerEventListeners() {
+        PluginManager pluginManager = Bukkit.getPluginManager();
+        pluginManager.registerEvents(new SpellCastListener(this, getSpell()), this);
+        pluginManager.registerEvents(new DefaultSpellEventListener(), this);
+    }
+
+    private Spell getSpell() {
+        Spell spell = new Spell();
+        spell.addEffect(new MessageEffect(EffectType.CASTER, "Hello from ModularSpells!"));
+        return spell;
+    }
+
+    private void registerWandRecipe() {
+        ItemStack wand = new ItemStack(Material.STICK);
+        ItemMeta meta = wand.getItemMeta();
+        meta.addEnchant(Enchantment.CHANNELING, 1, false);
+        meta.addItemFlags(ItemFlag.HIDE_ENCHANTS);
+        meta.setDisplayName("Magic Wand");
+        meta.setLore((Arrays.asList("Allows you to cast magic spells.")));
+        meta.getPersistentDataContainer()
+                .set(new NamespacedKey(this, "isWand"), PersistentDataType.BYTE, (byte) 1);
+        wand.setItemMeta(meta);
+
+        NamespacedKey key = new NamespacedKey(this, "magic_wand");
+        ShapelessRecipe recipe = new ShapelessRecipe(key, wand);
+        recipe.addIngredient(Material.STICK);
+        recipe.addIngredient(Material.EMERALD);
+        Bukkit.addRecipe(recipe);
+    }
 }
