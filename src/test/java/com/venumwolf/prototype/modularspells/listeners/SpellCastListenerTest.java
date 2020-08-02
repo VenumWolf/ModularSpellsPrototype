@@ -20,21 +20,24 @@
 package com.venumwolf.prototype.modularspells.listeners;
 
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
+import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
 import org.bukkit.block.BlockFace;
 import org.bukkit.entity.Entity;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Event;
 import org.bukkit.event.Event.Result;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
+import org.bukkit.inventory.ItemFactory;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.junit.Before;
+import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -42,7 +45,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.mockito.Mockito.*;
 
 @RunWith(MockitoJUnitRunner.class)
@@ -60,13 +63,21 @@ class SpellCastListenerTest {
     BlockFace blockFace;
 
     @Mock
+    ItemFactory itemFactory;
+
+    @Mock
     Spell spell;
 
+
     SpellCastListener listener;
+
+    @Before
+    void mockBukkit() { }
 
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+
         listener = new SpellCastListener(plugin, spell);
     }
 
@@ -116,9 +127,55 @@ class SpellCastListenerTest {
         assertEquals(Result.ALLOW, event.useInteractedBlock());
     }
 
+    /**
+     * Verifies the spell is not triggered, and the event is not cancelled on a left-click.
+     */
+    @Test
+    void attackAirWithWand() {
+        Action action = Action.LEFT_CLICK_AIR;
+        PlayerInteractEvent event = callAndReturnEvent(action, getWand());
+        verify(spell, never()).trigger(any(Entity.class));
+        assertEquals(Result.ALLOW, event.useItemInHand());
+    }
+
+    /**
+     * Verifies the spell is not triggered, and the event is not cancelled on a left-click.
+     */
+    @Test
+    void attackAirWithItem() {
+        Action action = Action.LEFT_CLICK_BLOCK;
+        PlayerInteractEvent event = callAndReturnEvent(action, new ItemStack(Material.STONE));
+        verify(spell, never()).trigger(any(Entity.class));
+        assertEquals(Result.ALLOW, event.useItemInHand());
+    }
+
+    /**
+     * Verifies the spell is not triggered, and the event is not cancelled on a left-click.
+     */
+    @Test
+    void attackBlockWithWand() {
+        Action action = Action.LEFT_CLICK_AIR;
+        PlayerInteractEvent event = callAndReturnEvent(action, getWand());
+        verify(spell, never()).trigger(any(Entity.class));
+        assertEquals(Result.ALLOW, event.useInteractedBlock());
+    }
+
+    /**
+     * Verifies the spell is not triggered, and the event is not cancelled on a left-click.
+     */
+    @Test
+    void attackBlockWithItem() {
+        Action action = Action.LEFT_CLICK_BLOCK;
+        PlayerInteractEvent event = callAndReturnEvent(action, new ItemStack(Material.STONE));
+        verify(spell, never()).trigger(any(Entity.class));
+        assertEquals(Result.ALLOW, event.useInteractedBlock());
+    }
+
     private ItemStack getWand() {
         ItemStack item = new ItemStack(Material.STICK);
         makeItemAWand(item);
+        PersistentDataContainer data = meta.getPersistentDataContainer();
+        data.set(new NamespacedKey(plugin, "isWand"), PersistentDataType.BYTE, (byte) 1);
         return item;
     }
 
