@@ -20,7 +20,6 @@
 package com.venumwolf.prototype.modularspells.listeners;
 
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
-import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
 import org.bukkit.block.Block;
@@ -37,7 +36,6 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.junit.Before;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.runner.RunWith;
@@ -63,21 +61,14 @@ class SpellCastListenerTest {
     BlockFace blockFace;
 
     @Mock
-    ItemFactory itemFactory;
-
-    @Mock
     Spell spell;
 
 
     SpellCastListener listener;
 
-    @Before
-    void mockBukkit() { }
-
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
-
         listener = new SpellCastListener(plugin, spell);
     }
 
@@ -87,7 +78,7 @@ class SpellCastListenerTest {
     @Test
     void useWandOnAir() {
         Action action = Action.RIGHT_CLICK_AIR;
-        PlayerInteractEvent event = callAndReturnEvent(action, getWand());
+        PlayerInteractEvent event = callAndReturnEvent(action, mockWandItem());
         verify(spell).trigger(any(Entity.class));
         assertEquals(Result.DENY, event.useItemInHand());
     }
@@ -99,7 +90,7 @@ class SpellCastListenerTest {
     @Test
     void useItemOnAir() {
         Action action = Action.RIGHT_CLICK_AIR;
-        PlayerInteractEvent event = callAndReturnEvent(action, new ItemStack(Material.STONE));
+        PlayerInteractEvent event = callAndReturnEvent(action, mockItem());
         verify(spell, never()).trigger(any(Entity.class));
         assertEquals(Result.ALLOW, event.useItemInHand());
     }
@@ -110,7 +101,7 @@ class SpellCastListenerTest {
     @Test
     void useWandOnBlock() {
         Action action = Action.RIGHT_CLICK_BLOCK;
-        PlayerInteractEvent event = callAndReturnEvent(action, getWand());
+        PlayerInteractEvent event = callAndReturnEvent(action, mockWandItem());
         verify(spell).trigger(any(Entity.class));
         assertEquals(Result.DENY, event.useInteractedBlock());
     }
@@ -122,7 +113,7 @@ class SpellCastListenerTest {
     @Test
     void useItemOnBlock() {
         Action action = Action.RIGHT_CLICK_BLOCK;
-        PlayerInteractEvent event = callAndReturnEvent(action, new ItemStack(Material.STONE));
+        PlayerInteractEvent event = callAndReturnEvent(action, mockItem());
         verify(spell, never()).trigger(any(Entity.class));
         assertEquals(Result.ALLOW, event.useInteractedBlock());
     }
@@ -133,7 +124,7 @@ class SpellCastListenerTest {
     @Test
     void attackAirWithWand() {
         Action action = Action.LEFT_CLICK_AIR;
-        PlayerInteractEvent event = callAndReturnEvent(action, getWand());
+        PlayerInteractEvent event = callAndReturnEvent(action, mockWandItem());
         verify(spell, never()).trigger(any(Entity.class));
         assertEquals(Result.ALLOW, event.useItemInHand());
     }
@@ -144,7 +135,7 @@ class SpellCastListenerTest {
     @Test
     void attackAirWithItem() {
         Action action = Action.LEFT_CLICK_BLOCK;
-        PlayerInteractEvent event = callAndReturnEvent(action, new ItemStack(Material.STONE));
+        PlayerInteractEvent event = callAndReturnEvent(action, mockItem());
         verify(spell, never()).trigger(any(Entity.class));
         assertEquals(Result.ALLOW, event.useItemInHand());
     }
@@ -155,7 +146,7 @@ class SpellCastListenerTest {
     @Test
     void attackBlockWithWand() {
         Action action = Action.LEFT_CLICK_AIR;
-        PlayerInteractEvent event = callAndReturnEvent(action, getWand());
+        PlayerInteractEvent event = callAndReturnEvent(action, mockWandItem());
         verify(spell, never()).trigger(any(Entity.class));
         assertEquals(Result.ALLOW, event.useInteractedBlock());
     }
@@ -171,18 +162,20 @@ class SpellCastListenerTest {
         assertEquals(Result.ALLOW, event.useInteractedBlock());
     }
 
-    private ItemStack getWand() {
-        ItemStack item = new ItemStack(Material.STICK);
-        makeItemAWand(item);
-        PersistentDataContainer data = meta.getPersistentDataContainer();
-        data.set(new NamespacedKey(plugin, "isWand"), PersistentDataType.BYTE, (byte) 1);
+    private ItemStack mockWandItem() {
+        ItemStack item = mockItem();
+        ItemMeta meta = item.getItemMeta();
+        PersistentDataContainer data = mock(PersistentDataContainer.class);
+        when(meta.getPersistentDataContainer()).thenReturn(data);
+        when(data.get(any(), any())).thenReturn((byte) 1);
         return item;
     }
 
-    private void makeItemAWand(ItemStack item) {
-        ItemMeta meta = item.getItemMeta();
-        PersistentDataContainer data = meta.getPersistentDataContainer();
-        data.set(new NamespacedKey(plugin, "isWand"), PersistentDataType.BYTE, (byte) 1);
+    private ItemStack mockItem() {
+        ItemStack item = mock(ItemStack.class);
+        ItemMeta meta = mock(ItemMeta.class);
+        when(item.getItemMeta()).thenReturn(meta);
+        return item;
     }
 
     private PlayerInteractEvent callAndReturnEvent(Action action, ItemStack item) {
