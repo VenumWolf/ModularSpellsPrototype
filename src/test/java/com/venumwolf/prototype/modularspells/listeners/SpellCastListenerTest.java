@@ -69,6 +69,7 @@ class SpellCastListenerTest {
     @BeforeEach
     void setUp() {
         MockitoAnnotations.openMocks(this);
+        when(plugin.getName()).thenReturn("TestPlugin");
         listener = new SpellCastListener(plugin, spell);
     }
 
@@ -92,7 +93,7 @@ class SpellCastListenerTest {
         Action action = Action.RIGHT_CLICK_AIR;
         PlayerInteractEvent event = callAndReturnEvent(action, mockItem());
         verify(spell, never()).trigger(any(Entity.class));
-        assertEquals(Result.ALLOW, event.useItemInHand());
+        assertEquals(Result.DEFAULT, event.useItemInHand());
     }
 
     /**
@@ -126,7 +127,7 @@ class SpellCastListenerTest {
         Action action = Action.LEFT_CLICK_AIR;
         PlayerInteractEvent event = callAndReturnEvent(action, mockWandItem());
         verify(spell, never()).trigger(any(Entity.class));
-        assertEquals(Result.ALLOW, event.useItemInHand());
+        assertEquals(Result.DEFAULT, event.useItemInHand());
     }
 
     /**
@@ -137,7 +138,7 @@ class SpellCastListenerTest {
         Action action = Action.LEFT_CLICK_BLOCK;
         PlayerInteractEvent event = callAndReturnEvent(action, mockItem());
         verify(spell, never()).trigger(any(Entity.class));
-        assertEquals(Result.ALLOW, event.useItemInHand());
+        assertEquals(Result.DEFAULT, event.useItemInHand());
     }
 
     /**
@@ -167,7 +168,7 @@ class SpellCastListenerTest {
         ItemMeta meta = item.getItemMeta();
         PersistentDataContainer data = mock(PersistentDataContainer.class);
         when(meta.getPersistentDataContainer()).thenReturn(data);
-        when(data.get(any(), any())).thenReturn((byte) 1);
+        when(data.get(new NamespacedKey(plugin, "isWand"), PersistentDataType.BYTE)).thenReturn((byte) 1);
         return item;
     }
 
