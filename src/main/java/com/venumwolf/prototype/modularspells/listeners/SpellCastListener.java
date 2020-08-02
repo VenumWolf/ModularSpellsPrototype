@@ -31,6 +31,10 @@ import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
 
+/**
+ * Listens for PlayerInteractEvents and determines if the player is using a wand.  When a wand item is used, the spell
+ * will be triggered.
+ */
 public class SpellCastListener implements Listener {
 
     /**
@@ -49,29 +53,54 @@ public class SpellCastListener implements Listener {
      */
     private Spell spell;
 
+    /**
+     * @param plugin
+     * @param spell
+     */
     public SpellCastListener(JavaPlugin plugin, Spell spell) {
         this.plugin = plugin;
         this.spell = spell;
     }
 
+    /**
+     * Handles PlayerInteractEvents and verifies if a spell should be cast.
+     *
+     * @param event The event.
+     */
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (isItemUseAction(event.getAction()) && isWandItem(event.getItem())){
+        if (isItemUseAction(event.getAction()) && isWandItem(event.getItem())) {
             spell.trigger(event.getPlayer());
             event.setCancelled(true);
         }
     }
 
+    /**
+     * Check if the provided ItemStack is a wand item.
+     * <p>
+     * An item is a "wand" if it has the "isWand"
+     * value set to 1 in its PersistentDataContainer.
+     *
+     * @param item The item to check.
+     * @return True if the item is a wand.
+     */
     private boolean isWandItem(ItemStack item) {
         boolean isWand = false;
         try {
             ItemMeta meta = item.getItemMeta();
             PersistentDataContainer data = meta.getPersistentDataContainer();
             isWand = data.get(new NamespacedKey(plugin, "isWand"), PersistentDataType.BYTE) != 0;
-        } catch (NullPointerException e) {}
+        } catch (NullPointerException e) {
+        }
         return isWand;
     }
 
+    /**
+     * Check if the action is a "use" action, or a right-click.
+     *
+     * @param action The action to check.
+     * @return True if the Action is a "use" Action.
+     */
     private boolean isItemUseAction(Action action) {
         return ((action == Action.RIGHT_CLICK_AIR) || (action == Action.RIGHT_CLICK_BLOCK));
     }
