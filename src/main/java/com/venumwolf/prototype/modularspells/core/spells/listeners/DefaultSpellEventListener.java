@@ -1,12 +1,21 @@
 package com.venumwolf.prototype.modularspells.core.spells.listeners;
 
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
+import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
+import com.venumwolf.prototype.modularspells.core.spells.effects.EffectType;
+import com.venumwolf.prototype.modularspells.core.spells.effects.ProjectileRegistry;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellCastEvent;
+import com.venumwolf.prototype.modularspells.core.spells.events.SpellImpactEvent;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellPrecastEvent;
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
+import org.bukkit.event.entity.ProjectileHitEvent;
+
+import java.util.List;
 
 /**
  * Provides the default, high-priority spell event listeners.  Most of these are required for the spell system to
@@ -42,6 +51,19 @@ public class DefaultSpellEventListener implements Listener {
             Entity caster = event.getCaster();
             spell.applyCasterEffects(caster);
             spell.launchProjectileEffects(caster);
+        }
+    }
+
+    @EventHandler(priority = EventPriority.HIGHEST)
+    public void onSpellImpactEvent(SpellImpactEvent event) {
+        Spell spell = event.getSpell();
+        Entity impactedEntity = event.getImpactedEntity();
+        Location impactLocation = event.getImpactLocation();
+        List<Effect> effects = spell.getEffectsOfType(EffectType.IMPACT, EffectType.IMPACT_AREA);
+        if (impactedEntity != null) {
+            effects.forEach(effect -> effect.applyToEntity(impactedEntity, spell));
+        } else {
+            effects.forEach(effect -> effect.applyToLocation(impactLocation, spell));
         }
     }
 }

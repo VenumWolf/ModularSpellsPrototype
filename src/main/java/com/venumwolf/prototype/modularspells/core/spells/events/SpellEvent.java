@@ -29,7 +29,7 @@ import org.bukkit.event.HandlerList;
  * other, more specific event implementations.  SpellEvent does not provide enough information on its own to be useful
  * to executing specific spell casting steps.
  */
-public class SpellEvent extends Event implements Cancellable {
+public abstract class SpellEvent extends Event implements Cancellable {
     private static final HandlerList HANDLERS = new HandlerList();
 
     protected boolean isCancelled = false;

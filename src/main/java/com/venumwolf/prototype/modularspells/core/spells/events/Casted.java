@@ -19,31 +19,13 @@
 
 package com.venumwolf.prototype.modularspells.core.spells.events;
 
-import com.venumwolf.prototype.modularspells.core.spells.Spell;
 import org.bukkit.entity.Entity;
 
-/**
- * Signals an actual spell cast.
- */
-public class SpellCastEvent extends SpellEvent implements Casted {
-    private Entity caster;
-
-    /**
-     * A basic constructor accepting a Spell object, and the Entity casting it.
-     *
-     * @param spell  The Spell object to be used in the spell cast.
-     * @param caster The Entity responsible for casting the spell.  This Entity can be considered the spell's origin.
-     */
-    public SpellCastEvent(Spell spell, Entity caster) {
-        super(spell);
-        this.caster = caster;
-    }
+public interface Casted {
 
     /**
      * Access the spell's Caster.
      * @return The Entity responsible for casting the spell.
      */
-    public Entity getCaster() {
-        return caster;
-    }
+    Entity getCaster();
 }

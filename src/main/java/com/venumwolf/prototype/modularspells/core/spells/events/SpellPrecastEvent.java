@@ -26,9 +26,17 @@ import org.bukkit.entity.Entity;
  * Signals the start of a spell cast.  This pre-cast phase should be used to perform pre-checks and to cancel the spell
  * if need be.
  */
-public class SpellPrecastEvent extends SpellCastEvent {
+public class SpellPrecastEvent extends SpellEvent implements Casted {
+
+    private Entity caster;
 
     public SpellPrecastEvent(Spell spell, Entity caster) {
-        super(spell, caster);
+        super(spell);
+        this.caster = caster;
+    }
+
+    @Override
+    public Entity getCaster() {
+        return caster;
     }
 }

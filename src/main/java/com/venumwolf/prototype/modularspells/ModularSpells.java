@@ -27,6 +27,7 @@ import com.venumwolf.prototype.modularspells.core.utils.command.map.CommandMappe
 import com.venumwolf.prototype.modularspells.core.utils.command.map.PluginCommandMapper;
 import com.venumwolf.prototype.modularspells.listeners.SpellCastListener;
 import com.venumwolf.prototype.modularspells.spells.effects.MessageEffect;
+import com.venumwolf.prototype.modularspells.spells.effects.SnowballEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -76,7 +77,8 @@ public final class ModularSpells extends JavaPlugin {
 
     private Spell getSpell() {
         Spell spell = new Spell();
-        spell.addEffect(new MessageEffect(EffectType.CASTER, "Hello from ModularSpells!"));
+        spell.addEffect(new SnowballEffect());
+        spell.addEffect(new MessageEffect(EffectType.IMPACT_AREA, "Hello from ModularSpells!"));
         return spell;
     }
 

@@ -20,16 +20,23 @@
 package com.venumwolf.prototype.modularspells.listeners;
 
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
+import com.venumwolf.prototype.modularspells.core.spells.effects.ProjectileRegistry;
+import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
+import org.bukkit.entity.Entity;
+import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
+import org.bukkit.event.entity.ProjectileHitEvent;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.meta.ItemMeta;
 import org.bukkit.persistence.PersistentDataContainer;
 import org.bukkit.persistence.PersistentDataType;
 import org.bukkit.plugin.java.JavaPlugin;
+
+import java.util.UUID;
 
 /**
  * Listens for PlayerInteractEvents and determines if the player is using a wand.  When a wand item is used, the spell
@@ -103,5 +110,23 @@ public class SpellCastListener implements Listener {
      */
     private boolean isItemUseAction(Action action) {
         return ((action == Action.RIGHT_CLICK_AIR) || (action == Action.RIGHT_CLICK_BLOCK));
+    }
+
+    @EventHandler
+    public void onProjectileHit(ProjectileHitEvent impact) {
+        Projectile projectile = impact.getEntity();
+        UUID projectileUuid = projectile.getUniqueId();
+        if (ProjectileRegistry.contains(projectileUuid)) {
+            Entity caster = (Entity) projectile.getShooter();
+            Entity impactedEntity = impact.getHitEntity();
+            Location impactLocation;
+            if (impactedEntity != null) {
+                impactLocation = impactedEntity.getLocation();
+            } else {
+                impactLocation = impact.getHitBlock().getLocation();
+            }
+            spell.impact(caster, impactLocation, impactedEntity);
+            ProjectileRegistry.remove(projectileUuid);
+        }
     }
 }

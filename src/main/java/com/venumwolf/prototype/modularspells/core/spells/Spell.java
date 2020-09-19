@@ -22,8 +22,10 @@ package com.venumwolf.prototype.modularspells.core.spells;
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
 import com.venumwolf.prototype.modularspells.core.spells.effects.EffectType;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellCastEvent;
+import com.venumwolf.prototype.modularspells.core.spells.events.SpellImpactEvent;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellPrecastEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.PluginManager;
 
@@ -122,9 +124,10 @@ public class Spell {
      * @param type The desired EffectType of the returned effects.
      * @return A List containing the filtered Effects.
      */
-    public List<Effect> getEffectsOfType(EffectType type) {
+    public List<Effect> getEffectsOfType(EffectType ... type) {
+        List<EffectType> types = Arrays.asList(type);
         return effects.stream()
-                .filter(effect -> effect.getType() == type)
+                .filter(effect -> types.contains(effect.getType()))
                 .collect(Collectors.toList());
     }
 
@@ -150,13 +153,17 @@ public class Spell {
         pluginManager.callEvent(new SpellCastEvent(this, caster));
     }
 
+    public void impact(Entity caster, Location impactLocation, Entity impactedEntity) {
+        pluginManager.callEvent(new SpellImpactEvent(this, caster, impactLocation, impactedEntity));
+    }
+
     /**
      * Apply all effects of type CASTER, and CASTER_AREA.
      *
      * @param caster The entity casting the spell.  This entity will be provided to the effects as the target.
      */
     public void applyCasterEffects(Entity caster) {
-        List<Effect> effects = getEffectsOfType(EffectType.CASTER);
+        List<Effect> effects = getEffectsOfType(EffectType.CASTER, EffectType.CASTER_AREA);
         effects.forEach(effect -> effect.applyToEntity(caster, this));
     }
 

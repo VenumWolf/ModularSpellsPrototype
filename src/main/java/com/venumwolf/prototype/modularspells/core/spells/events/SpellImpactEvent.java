@@ -23,7 +23,9 @@ import com.venumwolf.prototype.modularspells.core.spells.Spell;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
 
-public class SpellImpactEvent extends SpellCastEvent {
+public class SpellImpactEvent extends SpellEvent implements Casted {
+
+    private Entity caster;
 
     private Location impactLocation;
 
@@ -37,7 +39,8 @@ public class SpellImpactEvent extends SpellCastEvent {
      * @param caster The Entity responsible for casting the spell.  This Entity can be considered the spell's origin.
      */
     public SpellImpactEvent(Spell spell, Entity caster, Location impactLocation, Entity impactedEntity) {
-        super(spell, caster);
+        super(spell);
+        this.caster = caster;
         this.impactLocation = impactLocation;
         this.impactedEntity = impactedEntity;
     }
@@ -64,5 +67,10 @@ public class SpellImpactEvent extends SpellCastEvent {
      */
     public boolean hasImpactedEntity() {
         return impactedEntity != null;
+    }
+
+    @Override
+    public Entity getCaster() {
+        return caster;
     }
 }
