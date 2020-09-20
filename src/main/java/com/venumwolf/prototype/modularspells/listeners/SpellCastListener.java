@@ -76,7 +76,7 @@ public class SpellCastListener implements Listener {
      */
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
-        if (isItemUseAction(event.getAction()) && isWandItem(event.getItem())) {
+        if (isPunchAction(event.getAction()) && isWandItem(event.getItem())) {
             spell.trigger(event.getPlayer());
             event.setCancelled(true);
         }
@@ -103,13 +103,13 @@ public class SpellCastListener implements Listener {
     }
 
     /**
-     * Check if the action is a "use" action, or a right-click.
+     * Check if the action is a "punch" action, or a left-click.
      *
      * @param action The action to check.
-     * @return True if the Action is a "use" Action.
+     * @return True if the Action is a "punch" (left-click.)
      */
-    private boolean isItemUseAction(Action action) {
-        return ((action == Action.RIGHT_CLICK_AIR) || (action == Action.RIGHT_CLICK_BLOCK));
+    private boolean isPunchAction(Action action) {
+        return ((action == Action.LEFT_CLICK_AIR) || (action == Action.LEFT_CLICK_BLOCK));
     }
 
     @EventHandler
