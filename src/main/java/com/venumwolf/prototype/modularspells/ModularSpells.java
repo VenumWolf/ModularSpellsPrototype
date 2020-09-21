@@ -22,7 +22,7 @@ package com.venumwolf.prototype.modularspells;
 import com.venumwolf.prototype.modularspells.commands.AboutCommand;
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
 import com.venumwolf.prototype.modularspells.core.spells.effects.EffectType;
-import com.venumwolf.prototype.modularspells.core.spells.effects.ProjectileSystem;
+import com.venumwolf.prototype.modularspells.core.spells.projectiles.ProjectileSystem;
 import com.venumwolf.prototype.modularspells.core.spells.listeners.DefaultSpellEventListener;
 import com.venumwolf.prototype.modularspells.core.utils.command.map.CommandMapper;
 import com.venumwolf.prototype.modularspells.core.utils.command.map.PluginCommandMapper;

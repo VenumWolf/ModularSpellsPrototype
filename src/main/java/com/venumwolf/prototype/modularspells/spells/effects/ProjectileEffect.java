@@ -22,7 +22,7 @@ package com.venumwolf.prototype.modularspells.spells.effects;
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
 import com.venumwolf.prototype.modularspells.core.spells.effects.EffectType;
-import com.venumwolf.prototype.modularspells.core.spells.effects.ProjectileSystem;
+import com.venumwolf.prototype.modularspells.core.spells.projectiles.ProjectileSystem;
 import com.venumwolf.prototype.modularspells.core.spells.projectiles.SpellProjectile;
 import org.bukkit.Location;
 import org.bukkit.Particle;

@@ -17,16 +17,27 @@
  * along with Modular Spells.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.venumwolf.prototype.modularspells.core.spells.effects;
+package com.venumwolf.prototype.modularspells.core.spells.projectiles;
 
-import com.venumwolf.prototype.modularspells.core.spells.projectiles.SpellProjectile;
 import org.bukkit.scheduler.BukkitRunnable;
 
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Provides tracking and updating for custom {@link SpellProjectile}s.  This system is required for
+ * Provides tracking and updating for custom {@link SpellProjectile}s.
+ * <br>
+ *
+ * In order for {@link SpellProjectile}s to work as intended, ProjectileSystem should be scheduled to run every tick.
+ * This can be done as such:
+ *
+ * <code>
+ * projectileSystem = new ProjectileSystem();
+ * projectileSystem.runTaskTimer(plugin, 0 , 1);
+ * </code>
+ *
+ * There should ideally be only one ProjectileSystem per plugin. Because ProjectileSystem is immutable, it is safe
+ * to have it globally accessible.
  */
 public class ProjectileSystem extends BukkitRunnable {
     private final List<SpellProjectile> projectiles = new ArrayList<>();
