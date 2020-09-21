@@ -23,7 +23,7 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * A UUID-based storage mechanism primarily used for tracking objects, and/or looking up information about them.
+ * A map-like, UUID-based storage mechanism primarily used for tracking objects, and/or looking up information about them.
  * @param <T> The type of the objects being stored.
  */
 public interface Registry<T> {
