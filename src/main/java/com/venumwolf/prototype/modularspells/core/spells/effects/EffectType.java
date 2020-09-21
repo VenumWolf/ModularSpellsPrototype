@@ -58,33 +58,5 @@ public enum EffectType {
      * <p>
      * CASTER_AREA type effects are applied as the spell is cast.
      */
-    CASTER_AREA,
-
-    /**
-     * AMBIENT_CAST type effects are applied as the spell is cast.
-     * <p>
-     * AMBIENT type effects are purely for aesthetics such as particles, sounds, ext.
-     */
-    AMBIENT_CAST,
-
-    /**
-     * AMBIENT_PROJECTILE type effects follow in-flight projectiles.
-     * <p>
-     * AMBIENT type effects are purely for aesthetics such as particles, sounds, ext.
-     */
-    AMBIENT_PROJECTILE,
-
-    /**
-     * AMBIENT_IMPACT type effects are applied when a PROJECTILE type effect hits something.
-     * <p>
-     * AMBIENT type effects are purely for aesthetics such as particles, sounds, ext.
-     */
-    AMBIENT_IMPACT,
-
-    /**
-     * AMBIENT_EFFECTED type effects are applied to any Entity targeted by a spell.
-     * <p>
-     * AMBIENT type effects are purely for aesthetics such as particles, sounds, ext.
-     */
-    AMBIENT_EFFECTED,
+    CASTER_AREA
 }
