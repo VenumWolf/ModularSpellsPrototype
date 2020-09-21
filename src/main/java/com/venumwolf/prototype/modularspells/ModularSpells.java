@@ -81,9 +81,9 @@ public final class ModularSpells extends JavaPlugin {
 
     private Spell getSpell() {
         Spell spell = new Spell();
-        spell.addEffect(new ProjectileEffect(projectileSystem, 2));
+        spell.addEffect(new ProjectileEffect(projectileSystem, 1.5));
         spell.addEffect(new DamageEffect(EffectType.IMPACT, 5));
-        spell.addEffect(new ExplosionEffect(EffectType.IMPACT, 1));
+        spell.addEffect(new ExplosionEffect(EffectType.IMPACT, 0));
         return spell;
     }
 

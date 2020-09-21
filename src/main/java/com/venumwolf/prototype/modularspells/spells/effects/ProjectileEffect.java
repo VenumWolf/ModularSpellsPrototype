@@ -61,8 +61,9 @@ public class ProjectileEffect extends Effect {
                 @Override
                 public void playEffect() {
                     World world = location.getWorld();
-                    world.spawnParticle(Particle.FLAME, location, 1, 0.05, 0.05, 0.05, 0.05, null, true);
-                    world.spawnParticle(Particle.SMOKE_LARGE, location, 3, 0.1, 0.1, 0.1, 0.05, null, true);
+                    world.spawnParticle(Particle.FLAME, location, 1, 0.02, 0.02, 0.02, 0.02, null, true);
+                    world.spawnParticle(Particle.SMOKE_NORMAL, location, 3, 0.1, 0.1, 0.1, 0.02, null, true);
+                    world.spawnParticle(Particle.LAVA, location, 1, 0.1, 0.1, 0.1, 0.03, null, true);
                 }
             });
         }
