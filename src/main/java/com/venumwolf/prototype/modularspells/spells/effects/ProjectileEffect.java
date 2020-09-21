@@ -31,11 +31,19 @@ import org.bukkit.entity.Entity;
 import org.bukkit.entity.LivingEntity;
 import org.bukkit.util.Vector;
 
+/**
+ * An Effect that shoots a SpellProjectile.
+ */
 public class ProjectileEffect extends Effect {
 
     private ProjectileSystem projectileSystem;
     private double launchVelocity;
 
+    /**
+     * Default constructor requiring a reference to the plugin's ProjectileSystem, and a launch velocity.
+     * @param projectileSystem The ProjectileSystem required to handle the shooting and calculations of the projectile.
+     * @param launchVelocity   How fast to launch the projectile.
+     */
     public ProjectileEffect(ProjectileSystem projectileSystem, double launchVelocity) {
         super(EffectType.PROJECTILE);
         this.projectileSystem = projectileSystem;
@@ -61,5 +69,5 @@ public class ProjectileEffect extends Effect {
     }
 
     @Override
-    public void applyToLocation(Location location, Spell spell) {/* Effect requires entity. */}
+    public void applyToLocation(Location location, Spell spell) {/* Effect requires an entity. */}
 }
