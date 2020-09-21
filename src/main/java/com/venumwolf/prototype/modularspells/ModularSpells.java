@@ -22,13 +22,14 @@ package com.venumwolf.prototype.modularspells;
 import com.venumwolf.prototype.modularspells.commands.AboutCommand;
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
 import com.venumwolf.prototype.modularspells.core.spells.effects.EffectType;
+import com.venumwolf.prototype.modularspells.core.spells.effects.ProjectileSystem;
 import com.venumwolf.prototype.modularspells.core.spells.listeners.DefaultSpellEventListener;
 import com.venumwolf.prototype.modularspells.core.utils.command.map.CommandMapper;
 import com.venumwolf.prototype.modularspells.core.utils.command.map.PluginCommandMapper;
 import com.venumwolf.prototype.modularspells.listeners.SpellCastListener;
 import com.venumwolf.prototype.modularspells.spells.effects.DamageEffect;
-import com.venumwolf.prototype.modularspells.spells.effects.MessageEffect;
-import com.venumwolf.prototype.modularspells.spells.effects.SnowballEffect;
+import com.venumwolf.prototype.modularspells.spells.effects.ExplosionEffect;
+import com.venumwolf.prototype.modularspells.spells.effects.ProjectileEffect;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.NamespacedKey;
@@ -50,6 +51,7 @@ import java.util.logging.Logger;
 public final class ModularSpells extends JavaPlugin {
     private final Logger logger = getLogger();
     private final CommandMapper commandMapper = new PluginCommandMapper(this);
+    private final ProjectileSystem projectileSystem = new ProjectileSystem();
 
     @Override
     public void onEnable() {
@@ -57,6 +59,7 @@ public final class ModularSpells extends JavaPlugin {
         registerEventListeners();
         registerCommands();
         registerWandRecipe();
+        projectileSystem.runTaskTimer(this, 0 , 1);
     }
 
     private void logLicenseNotice() {
@@ -78,8 +81,9 @@ public final class ModularSpells extends JavaPlugin {
 
     private Spell getSpell() {
         Spell spell = new Spell();
-        spell.addEffect(new SnowballEffect());
+        spell.addEffect(new ProjectileEffect(projectileSystem, 2));
         spell.addEffect(new DamageEffect(EffectType.IMPACT, 5));
+        spell.addEffect(new ExplosionEffect(EffectType.IMPACT, 1));
         return spell;
     }
 

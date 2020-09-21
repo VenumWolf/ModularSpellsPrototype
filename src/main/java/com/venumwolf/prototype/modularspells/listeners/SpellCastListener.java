@@ -127,6 +127,7 @@ public class SpellCastListener implements Listener {
             }
             spell.impact(caster, impactLocation, impactedEntity);
             ProjectileRegistry.remove(projectileUuid);
+            projectile.remove();
         }
     }
 }
