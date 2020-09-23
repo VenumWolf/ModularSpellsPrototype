@@ -17,7 +17,7 @@
  * along with Modular Spells.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.venumwolf.prototype.modularspells.core.utils;
+package com.venumwolf.prototype.modularspells.core.utils.storage;
 
 import java.util.List;
 import java.util.UUID;
