@@ -27,6 +27,7 @@ import com.venumwolf.prototype.modularspells.core.spells.listeners.DefaultSpellE
 import com.venumwolf.prototype.modularspells.core.utils.command.map.CommandMapper;
 import com.venumwolf.prototype.modularspells.core.utils.command.map.PluginCommandMapper;
 import com.venumwolf.prototype.modularspells.listeners.SpellCastListener;
+import com.venumwolf.prototype.modularspells.core.spells.listeners.SpellCoolDownListener;
 import com.venumwolf.prototype.modularspells.spells.effects.DamageEffect;
 import com.venumwolf.prototype.modularspells.spells.effects.ExplosionEffect;
 import com.venumwolf.prototype.modularspells.spells.effects.ProjectileEffect;
@@ -77,6 +78,7 @@ public final class ModularSpells extends JavaPlugin {
         PluginManager pluginManager = Bukkit.getPluginManager();
         pluginManager.registerEvents(new SpellCastListener(this, getSpell()), this);
         pluginManager.registerEvents(new DefaultSpellEventListener(), this);
+        pluginManager.registerEvents(new SpellCoolDownListener(), this);
     }
 
     private Spell getSpell() {
