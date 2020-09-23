@@ -19,6 +19,7 @@
 
 package com.venumwolf.prototype.modularspells.core.spells.effects;
 
+import com.venumwolf.prototype.modularspells.core.spells.RateLimited;
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
@@ -29,7 +30,7 @@ import java.util.List;
  * Provides the base programming interface for spell effects, as well as some default implementations for convenience
  * methods.
  */
-public abstract class Effect {
+public abstract class Effect implements RateLimited {
 
     /**
      * The type of the effect.  This controls how and when the effect is applied in the spell casting process.
@@ -38,6 +39,8 @@ public abstract class Effect {
      */
     protected EffectType type;
 
+    protected long coolDown;
+
     /**
      * Initialize with an EffectType value.
      *
@@ -45,6 +48,17 @@ public abstract class Effect {
      */
     public Effect(EffectType type) {
         this.type = type;
+        coolDown = 0L;
+    }
+
+    /**
+     * Initialize with a type and a cool-down.
+     * @param type     The EffectType for the effect.
+     * @param coolDown The time between uses in milliseconds.
+     */
+    public Effect(EffectType type, long coolDown) {
+        this.type = type;
+        this.coolDown = coolDown;
     }
 
     /**
@@ -94,5 +108,10 @@ public abstract class Effect {
      */
     public EffectType getType() {
         return type;
+    }
+
+    @Override
+    public long getCoolDown() {
+        return coolDown;
     }
 }
