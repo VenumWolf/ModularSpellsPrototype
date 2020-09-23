@@ -17,7 +17,7 @@
  * along with Modular Spells.  If not, see <https://www.gnu.org/licenses/>.
  */
 
-package com.venumwolf.prototype.modularspells.core.spells.ambient;
+package com.venumwolf.prototype.modularspells.core.utils.ambient;
 
 
 import org.bukkit.Location;
