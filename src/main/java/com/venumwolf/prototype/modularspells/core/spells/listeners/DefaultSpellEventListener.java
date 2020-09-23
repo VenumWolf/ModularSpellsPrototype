@@ -46,12 +46,10 @@ public class DefaultSpellEventListener implements Listener {
      */
     @EventHandler(priority = EventPriority.HIGHEST)
     public void onSpellCastEvent(SpellCastEvent event) {
-        if (!event.isCancelled()) {
-            Spell spell = event.getSpell();
-            Entity caster = event.getCaster();
-            spell.applyCasterEffects(caster);
-            spell.launchProjectileEffects(caster);
-        }
+        Spell spell = event.getSpell();
+        Entity caster = event.getCaster();
+        spell.applyCasterEffects(caster);
+        spell.launchProjectileEffects(caster);
     }
 
     @EventHandler(priority = EventPriority.HIGHEST)
