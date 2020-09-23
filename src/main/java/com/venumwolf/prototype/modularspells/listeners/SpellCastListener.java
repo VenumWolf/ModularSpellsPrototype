@@ -20,7 +20,6 @@
 package com.venumwolf.prototype.modularspells.listeners;
 
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
-import com.venumwolf.prototype.modularspells.core.spells.effects.ProjectileRegistry;
 import org.bukkit.Location;
 import org.bukkit.NamespacedKey;
 import org.bukkit.entity.Entity;
@@ -110,24 +109,5 @@ public class SpellCastListener implements Listener {
      */
     private boolean isPunchAction(Action action) {
         return ((action == Action.LEFT_CLICK_AIR) || (action == Action.LEFT_CLICK_BLOCK));
-    }
-
-    @EventHandler
-    public void onProjectileHit(ProjectileHitEvent impact) {
-        Projectile projectile = impact.getEntity();
-        UUID projectileUuid = projectile.getUniqueId();
-        if (ProjectileRegistry.contains(projectileUuid)) {
-            Entity caster = (Entity) projectile.getShooter();
-            Entity impactedEntity = impact.getHitEntity();
-            Location impactLocation;
-            if (impactedEntity != null) {
-                impactLocation = impactedEntity.getLocation();
-            } else {
-                impactLocation = impact.getHitBlock().getLocation();
-            }
-            spell.impact(caster, impactLocation, impactedEntity);
-            ProjectileRegistry.remove(projectileUuid);
-            projectile.remove();
-        }
     }
 }
