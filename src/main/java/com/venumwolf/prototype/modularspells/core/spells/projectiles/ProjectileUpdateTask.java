@@ -39,7 +39,7 @@ import java.util.List;
  * There should ideally be only one ProjectileSystem per plugin. Because ProjectileSystem is immutable, it is safe
  * to have it globally accessible.
  */
-public class ProjectileSystem extends BukkitRunnable {
+public class ProjectileUpdateTask extends BukkitRunnable {
     private final List<SpellProjectile> projectiles = new ArrayList<>();
 
     public void shoot(SpellProjectile projectile) {

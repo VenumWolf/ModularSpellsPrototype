@@ -22,7 +22,7 @@ package com.venumwolf.prototype.modularspells.spells.effects;
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
 import com.venumwolf.prototype.modularspells.core.spells.effects.EffectType;
-import com.venumwolf.prototype.modularspells.core.spells.projectiles.ProjectileSystem;
+import com.venumwolf.prototype.modularspells.core.spells.projectiles.ProjectileUpdateTask;
 import com.venumwolf.prototype.modularspells.core.spells.projectiles.SpellProjectile;
 import org.bukkit.Location;
 import org.bukkit.Particle;
@@ -36,7 +36,7 @@ import org.bukkit.util.Vector;
  */
 public class ProjectileEffect extends Effect {
 
-    private ProjectileSystem projectileSystem;
+    private ProjectileUpdateTask projectileSystem;
     private double launchVelocity;
 
     /**
@@ -44,7 +44,7 @@ public class ProjectileEffect extends Effect {
      * @param projectileSystem The ProjectileSystem required to handle the shooting and calculations of the projectile.
      * @param launchVelocity   How fast to launch the projectile.
      */
-    public ProjectileEffect(ProjectileSystem projectileSystem, double launchVelocity) {
+    public ProjectileEffect(ProjectileUpdateTask projectileSystem, double launchVelocity) {
         super(EffectType.PROJECTILE);
         this.projectileSystem = projectileSystem;
         this.launchVelocity = launchVelocity;
