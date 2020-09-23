@@ -21,8 +21,6 @@ package com.venumwolf.prototype.modularspells.core.spells.effects;
 
 /**
  * Provides information about when / how an effect should be applied.
- * <p>
- * AMBIENT type effects are purely for aesthetics such as particles, sounds, ext.
  */
 public enum EffectType {
     /**
