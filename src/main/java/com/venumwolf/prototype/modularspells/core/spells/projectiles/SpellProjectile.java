@@ -23,14 +23,13 @@ package com.venumwolf.prototype.modularspells.core.spells.projectiles;
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellImpactEvent;
 import org.bukkit.Bukkit;
+import org.bukkit.FluidCollisionMode;
 import org.bukkit.Location;
-import org.bukkit.Material;
+import org.bukkit.World;
 import org.bukkit.entity.Entity;
 import org.bukkit.plugin.PluginManager;
+import org.bukkit.util.RayTraceResult;
 import org.bukkit.util.Vector;
-
-import java.util.Collection;
-import java.util.List;
 
 public abstract class SpellProjectile {
 
@@ -41,7 +40,7 @@ public abstract class SpellProjectile {
     protected double gravity;
     protected PluginManager pluginManager;
 
-    protected boolean hasImpacted = false;
+    protected RayTraceResult impact = null;
     protected boolean hasCalledImpactEvent = false;
 
     public SpellProjectile(Spell spell, Entity caster, Location location, Vector velocity, double gravity) {
@@ -57,11 +56,14 @@ public abstract class SpellProjectile {
     public abstract void playEffect();
 
     public void tick() {
-        if (!hasImpacted) {
+        if (impact == null) {
             update();
             playEffect();
         } else if (!hasCalledImpactEvent) {
-            pluginManager.callEvent(new SpellImpactEvent(spell, caster, location, getImpactedEntity(0.5)));
+            World world = location.getWorld();
+            Vector hitPosition = impact.getHitPosition();
+            Location impactLocation = new Location(world, hitPosition.getX(), hitPosition.getY(), hitPosition.getZ());
+            pluginManager.callEvent(new SpellImpactEvent(spell, caster, impactLocation, impact.getHitEntity()));
             hasCalledImpactEvent = true;
         }
     }
@@ -69,27 +71,12 @@ public abstract class SpellProjectile {
     public void update() {
         velocity.setY(velocity.getY() - gravity);
         location.add(velocity);
-        hasImpacted = hasImpacted();
+        impact = rayTraceImpact();
     }
 
-    public boolean hasImpacted() {
-        Entity impactedEntity = getImpactedEntity(0.5);
-        return hasImpacted || !isInAir() || (impactedEntity != null && !impactedEntity.equals(caster));
-    }
-
-    private boolean isInAir() {
-        Material locationMaterial = location.getBlock().getType();
-        return locationMaterial == Material.AIR
-                || locationMaterial == Material.CAVE_AIR
-                || locationMaterial == Material.VOID_AIR;
-    }
-
-    private Entity getImpactedEntity(double impactDistance) {
-        Entity entity = null;
-        Collection<Entity> entities = location.getNearbyEntities(impactDistance, impactDistance, impactDistance);
-        if (!entities.isEmpty())
-            entity = (Entity) entities.toArray()[0];
-        return entity;
+    private RayTraceResult rayTraceImpact() {
+        World world = location.getWorld();
+        return world.rayTrace(location, velocity.clone().normalize(), 2, FluidCollisionMode.ALWAYS, false, 0.5, null);
     }
 
     public Entity getCaster() {
