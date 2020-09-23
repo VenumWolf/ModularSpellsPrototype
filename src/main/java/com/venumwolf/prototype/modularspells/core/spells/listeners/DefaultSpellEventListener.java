@@ -3,17 +3,14 @@ package com.venumwolf.prototype.modularspells.core.spells.listeners;
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
 import com.venumwolf.prototype.modularspells.core.spells.effects.Effect;
 import com.venumwolf.prototype.modularspells.core.spells.effects.EffectType;
-import com.venumwolf.prototype.modularspells.core.spells.effects.ProjectileRegistry;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellCastEvent;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellImpactEvent;
 import com.venumwolf.prototype.modularspells.core.spells.events.SpellPrecastEvent;
 import org.bukkit.Location;
 import org.bukkit.entity.Entity;
-import org.bukkit.entity.Projectile;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.ProjectileHitEvent;
 
 import java.util.List;
 
