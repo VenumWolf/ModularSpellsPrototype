@@ -23,13 +23,12 @@ package com.venumwolf.prototype.modularspells.core.spells.ambient;
 import org.bukkit.Location;
 
 /**
- * Particle effects as preconfigured objects.  Allows for preconfigured particle systems that can be passed into other
- * functions as arguments.
+ * Preconfigured ambient effect systems that can be passed into other functions as arguments.
  */
-public interface ParticleEffect {
+public interface AmbientEffect {
 
     /**
-     * Play the particle effect at the specified location.
+     * Play the effect at the specified location.
      * @param location The location to play the particle effect.
      */
     void play(Location location);
