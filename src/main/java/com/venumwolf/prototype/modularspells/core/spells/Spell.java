@@ -35,7 +35,7 @@ import java.util.stream.Collectors;
 /**
  * Represents a set of effects to be cast.
  */
-public class Spell {
+public class Spell implements RateLimited {
     final Set<Effect> effects = new HashSet<>();
 
     PluginManager pluginManager;
@@ -175,5 +175,12 @@ public class Spell {
     public void launchProjectileEffects(Entity caster) {
         List<Effect> effects = getEffectsOfType(EffectType.PROJECTILE);
         effects.forEach(effect -> effect.applyToEntity(caster, this));
+    }
+
+    @Override
+    public long getCoolDown() {
+        return effects.stream()
+                .mapToLong(Effect::getCoolDown)
+                .sum();
     }
 }
