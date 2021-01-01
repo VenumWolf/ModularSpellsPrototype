@@ -1,12 +1,6 @@
 # Modular Spells (Prototype)
 
-Modular Spells is a magic plugin for Minecraft Paper servers adding a component-based magic system.  Players create and 
-customize their own magic spells by combining spell pages (components) in their spell book.  Each page contributes a 
-unique effect or behavior to the final spell, and players are encouraged to experiment with different combinations to
-create spells which suit their play style.  Crafting powerful spells is not without risk, however. Magicians must take 
-care not to exceed their own abilities, or the capabilities of their wands lest they suffer the consequences.
-
-This prototype implements a simple TDM / FFA mini-game featuring the pluggable magic system as a proof-of-concept.
+A proof-of-concept for a Minecraft Spell system.
 
 ## License
 
