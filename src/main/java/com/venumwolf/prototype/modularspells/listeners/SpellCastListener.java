@@ -19,7 +19,9 @@
 
 package com.venumwolf.prototype.modularspells.listeners;
 
+import com.venumwolf.prototype.modularspells.core.providers.SpellProvider;
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
+import org.bukkit.ChatColor;
 import org.bukkit.NamespacedKey;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -44,22 +46,17 @@ public class SpellCastListener implements Listener {
     private JavaPlugin plugin;
 
     /**
-     * The spell to be cast.
-     * <p>
-     * For the time being, the spell is hard-coded as there is no spell retrieval system.  Such a system is planned in
-     * the near future.
-     * <p>
-     * TODO: Implement a per-entity spell retrieval system so spells can be picked and chosen for each spell caster.
+     * Provides a Spell to be cast.
      */
-    private Spell spell;
+    private SpellProvider spellProvider;
 
     /**
      * @param plugin
-     * @param spell
+     * @param spellProvider
      */
-    public SpellCastListener(JavaPlugin plugin, Spell spell) {
+    public SpellCastListener(JavaPlugin plugin, SpellProvider spellProvider) {
         this.plugin = plugin;
-        this.spell = spell;
+        this.spellProvider = spellProvider;
     }
 
     /**
@@ -70,8 +67,16 @@ public class SpellCastListener implements Listener {
     @EventHandler
     public void onPlayerInteract(PlayerInteractEvent event) {
         if (isPunchAction(event.getAction()) && isWandItem(event.getItem())) {
-            spell.trigger(event.getPlayer());
-            event.setCancelled(true);
+            if (event.getPlayer().isSneaking()) {
+                spellProvider.setActiveSpell(event.getPlayer(), null);
+                event.getPlayer().sendMessage(
+                        ChatColor.GREEN + "Active Spell: " + ChatColor.LIGHT_PURPLE
+                                + spellProvider.getActiveSpell(event.getPlayer()).getName());
+            } else {
+                Spell spell = spellProvider.getActiveSpell(event.getPlayer());
+                spell.trigger(event.getPlayer());
+                event.setCancelled(true);
+            }
         }
     }
 

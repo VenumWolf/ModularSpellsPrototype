@@ -20,6 +20,8 @@
 package com.venumwolf.prototype.modularspells;
 
 import com.venumwolf.prototype.modularspells.commands.AboutCommand;
+import com.venumwolf.prototype.modularspells.core.providers.CyclingSpellProvider;
+import com.venumwolf.prototype.modularspells.core.providers.SpellProvider;
 import com.venumwolf.prototype.modularspells.core.spells.Spell;
 import com.venumwolf.prototype.modularspells.core.spells.effects.EffectType;
 import com.venumwolf.prototype.modularspells.core.spells.projectiles.ProjectileUpdateTask;
@@ -76,17 +78,29 @@ public final class ModularSpells extends JavaPlugin {
 
     private void registerEventListeners() {
         PluginManager pluginManager = Bukkit.getPluginManager();
-        pluginManager.registerEvents(new SpellCastListener(this, getSpell()), this);
+        pluginManager.registerEvents(new SpellCastListener(this, getSpellProvider()), this);
         pluginManager.registerEvents(new DefaultSpellEventListener(), this);
         pluginManager.registerEvents(new SpellCoolDownListener(), this);
     }
 
-    private Spell getSpell() {
-        Spell spell = new Spell();
-        spell.addEffect(new ProjectileEffect(projectileSystem, 1.5));
-        spell.addEffect(new DamageEffect(EffectType.IMPACT, 5));
-        spell.addEffect(new ExplosionEffect(EffectType.IMPACT, 0));
-        return spell;
+    private List<Spell> getSpells() {
+        List<Spell> spells = new ArrayList<>();
+
+        Spell fireballSpell = new Spell();
+        fireballSpell.setName("Fireball Spell");
+        fireballSpell.addEffect(new ProjectileEffect(projectileSystem, 1.5));
+        fireballSpell.addEffect(new DamageEffect(EffectType.IMPACT, 5));
+        fireballSpell.addEffect(new ExplosionEffect(EffectType.IMPACT, 0));
+        spells.add(fireballSpell);
+
+        Spell bigFireballSpell = new Spell();
+        bigFireballSpell.setName("Big Fireball Spell");
+        bigFireballSpell.addEffect(new ProjectileEffect(projectileSystem, 1.5));
+        bigFireballSpell.addEffect(new DamageEffect(EffectType.IMPACT, 10));
+        bigFireballSpell.addEffect(new ExplosionEffect(EffectType.IMPACT, 3));
+        spells.add(bigFireballSpell);
+
+        return spells;
     }
 
     private void registerWandRecipe() {
@@ -105,5 +119,9 @@ public final class ModularSpells extends JavaPlugin {
         recipe.addIngredient(Material.STICK);
         recipe.addIngredient(Material.EMERALD);
         Bukkit.addRecipe(recipe);
+    }
+
+    private SpellProvider getSpellProvider() {
+        return new CyclingSpellProvider(getSpells());
     }
 }

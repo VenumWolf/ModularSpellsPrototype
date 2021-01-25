@@ -38,6 +38,8 @@ import java.util.stream.Collectors;
 public class Spell implements RateLimited {
     final Set<Effect> effects = new HashSet<>();
 
+    String name;
+
     PluginManager pluginManager;
 
     /**
@@ -45,6 +47,7 @@ public class Spell implements RateLimited {
      */
     public Spell() {
         pluginManager = Bukkit.getPluginManager();
+        name = "Spell";
     }
 
     /**
@@ -54,6 +57,7 @@ public class Spell implements RateLimited {
      */
     public Spell(PluginManager pluginManager) {
         this.pluginManager = pluginManager;
+        name = "Spell";
     }
 
     /**
@@ -63,6 +67,14 @@ public class Spell implements RateLimited {
      */
     public Spell(Collection<? extends Effect> effects) {
         this.effects.addAll(effects);
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     /**
